@@ -30,12 +30,15 @@ const routes: Routes = [
   },
   {
     path: 'login',
-    loadComponent: () => import('./login/login.component'),
-    title: 'login.title',
+    loadComponent: () => import('./login/login.component').then(m => m.default),
   },
   {
     path: '',
     loadChildren: () => import(`./entities/entity.routes`),
+  },
+  {
+    path: 'dashboard',
+    loadComponent: () => import('./entities/dashboard/dashboard.component').then(m => m.DashboardComponent),
   },
   ...errorRoute,
 ];

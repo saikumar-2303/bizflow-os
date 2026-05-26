@@ -1,0 +1,179 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2
+        id="jhi-stock-transaction-heading"
+        data-cy="StockTransactionCreateUpdateHeading"
+        jhiTranslate="bizFlowApp.stockTransaction.home.createOrEditLabel"
+      >
+        Create or edit a Stock Transaction
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="bizFlowApp.stockTransaction.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let transactionTypeRef = editForm.get('transactionType')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_transactionType" jhiTranslate="bizFlowApp.stockTransaction.transactionType"
+            >Transaction Type</label
+          >
+          <input
+            type="text"
+            class="form-control"
+            name="transactionType"
+            id="field_transactionType"
+            data-cy="transactionType"
+            formControlName="transactionType"
+          />
+          @if (transactionTypeRef.invalid && (transactionTypeRef.dirty || transactionTypeRef.touched)) {
+            <div>
+              @if (editForm.get('transactionType')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let quantityRef = editForm.get('quantity')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_quantity" jhiTranslate="bizFlowApp.stockTransaction.quantity">Quantity</label>
+          <input type="number" class="form-control" name="quantity" id="field_quantity" data-cy="quantity" formControlName="quantity" />
+          @if (quantityRef.invalid && (quantityRef.dirty || quantityRef.touched)) {
+            <div>
+              @if (editForm.get('quantity')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('quantity')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let previousStockRef = editForm.get('previousStock')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_previousStock" jhiTranslate="bizFlowApp.stockTransaction.previousStock"
+            >Previous Stock</label
+          >
+          <input
+            type="number"
+            class="form-control"
+            name="previousStock"
+            id="field_previousStock"
+            data-cy="previousStock"
+            formControlName="previousStock"
+          />
+          @if (previousStockRef.invalid && (previousStockRef.dirty || previousStockRef.touched)) {
+            <div>
+              @if (editForm.get('previousStock')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('previousStock')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let newStockRef = editForm.get('newStock')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_newStock" jhiTranslate="bizFlowApp.stockTransaction.newStock">New Stock</label>
+          <input type="number" class="form-control" name="newStock" id="field_newStock" data-cy="newStock" formControlName="newStock" />
+          @if (newStockRef.invalid && (newStockRef.dirty || newStockRef.touched)) {
+            <div>
+              @if (editForm.get('newStock')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('newStock')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_remarks" jhiTranslate="bizFlowApp.stockTransaction.remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
+        </div>
+
+        @let createdDateRef = editForm.get('createdDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_createdDate" jhiTranslate="bizFlowApp.stockTransaction.createdDate">Created Date</label>
+          <div class="d-flex">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="datetime-local"
+              class="form-control"
+              name="createdDate"
+              formControlName="createdDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (createdDateRef.invalid && (createdDateRef.dirty || createdDateRef.touched)) {
+            <div>
+              @if (editForm.get('createdDate')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('createdDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_product" jhiTranslate="bizFlowApp.stockTransaction.product">Product</label>
+          <select
+            class="form-control"
+            id="field_product"
+            data-cy="product"
+            name="product"
+            formControlName="product"
+            [compareWith]="compareProduct"
+          >
+            <option [ngValue]="null"></option>
+            @for (productOption of productsSharedCollection; track $index) {
+              <option [ngValue]="productOption">{{ productOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

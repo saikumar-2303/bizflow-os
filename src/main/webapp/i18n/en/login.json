@@ -1,6 +1,7 @@
 {
   "login": {
-    "title": "Sign in",
+    "title": "DTN Paper Products",
+    "subtitle": "Admin Panel Login",
     "form": {
       "password": "Password",
       "password.placeholder": "Your password",

@@ -1,0 +1,145 @@
+<div>
+  <h2 id="page-heading" data-cy="StockTransactionHeading">
+    <span jhiTranslate="bizFlowApp.stockTransaction.home.title">Stock Transactions</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="bizFlowApp.stockTransaction.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-stock-transaction"
+        [routerLink]="['/stock-transaction/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bizFlowApp.stockTransaction.home.createLabel">Create a new Stock Transaction</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  @if (stockTransactions().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="bizFlowApp.stockTransaction.home.notFound">No Stock Transactions found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="transactionType">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.stockTransaction.transactionType">Transaction Type</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="quantity">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.stockTransaction.quantity">Quantity</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="previousStock">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.stockTransaction.previousStock">Previous Stock</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="newStock">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.stockTransaction.newStock">New Stock</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="remarks">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.stockTransaction.remarks">Remarks</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="createdDate">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.stockTransaction.createdDate">Created Date</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="product.name">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.stockTransaction.product">Product</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (stockTransaction of stockTransactions(); track trackId(stockTransaction)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/stock-transaction', stockTransaction.id, 'view']">{{ stockTransaction.id }}</a>
+              </td>
+              <td>{{ stockTransaction.transactionType }}</td>
+              <td>{{ stockTransaction.quantity }}</td>
+              <td>{{ stockTransaction.previousStock }}</td>
+              <td>{{ stockTransaction.newStock }}</td>
+              <td>{{ stockTransaction.remarks }}</td>
+              <td>{{ stockTransaction.createdDate | formatMediumDatetime }}</td>
+              <td>
+                @if (stockTransaction.product) {
+                  <div>
+                    <a [routerLink]="['/product', stockTransaction.product.id, 'view']">{{ stockTransaction.product.name }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a
+                    [routerLink]="['/stock-transaction', stockTransaction.id, 'view']"
+                    class="btn btn-info btn-sm"
+                    data-cy="entityDetailsButton"
+                  >
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a
+                    [routerLink]="['/stock-transaction', stockTransaction.id, 'edit']"
+                    class="btn btn-primary btn-sm"
+                    data-cy="entityEditButton"
+                  >
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(stockTransaction)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>

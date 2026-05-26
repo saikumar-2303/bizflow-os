@@ -1,0 +1,32 @@
+{
+  "bizFlowApp": {
+    "product": {
+      "home": {
+        "title": "Products",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Product बनाएँ",
+        "createOrEditLabel": "Product बनाएँ या संपादित करें",
+        "notFound": "No Products found"
+      },
+      "created": "एक नया Product [identifier: {{ param }}] तैयार है",
+      "updated": "एक Product [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Product [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Product [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Product"
+      },
+      "id": "ID",
+      "name": "Name",
+      "category": "Category",
+      "description": "Description",
+      "buyPrice": "Buy Price",
+      "sellPrice": "Sell Price",
+      "stockQuantity": "Stock Quantity",
+      "lowStockAlert": "Low Stock Alert",
+      "barcode": "Barcode",
+      "active": "Active"
+    }
+  }
+}

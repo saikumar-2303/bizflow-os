@@ -8,7 +8,16 @@
       "entities": {
         "main": "Entities",
         "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)",
-        "adminAuthority": "Authority"
+        "adminAuthority": "Authority",
+        "product": "Product",
+        "customer": "Customer",
+        "customerOrder": "Customer Order",
+        "orderItem": "Order Item",
+        "invoice": "Invoice",
+        "invoiceItem": "Invoice Item",
+        "stockTransaction": "Stock Transaction",
+        "expense": "Expense",
+        "employee": "Employee"
       },
       "account": {
         "main": "Account",
@@ -144,5 +153,5 @@
       "not.image": "File was expected to be an image but was found to be \"{{ fileType }}\""
     }
   },
-  "footer": "This is your footer"
+  "footer": "© 2026 DTN Paper Products"
 }

@@ -1,0 +1,30 @@
+{
+  "bizFlowApp": {
+    "stockTransaction": {
+      "home": {
+        "title": "Stock Transactions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Stock Transaction  సృష్టించండి",
+        "createOrEditLabel": "Stock Transaction సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Stock Transactions found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Stock Transaction సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Stock Transaction సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Stock Transaction తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Stock Transaction {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Stock Transaction"
+      },
+      "id": "ID",
+      "transactionType": "Transaction Type",
+      "quantity": "Quantity",
+      "previousStock": "Previous Stock",
+      "newStock": "New Stock",
+      "remarks": "Remarks",
+      "createdDate": "Created Date",
+      "product": "Product"
+    }
+  }
+}

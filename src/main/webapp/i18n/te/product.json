@@ -1,0 +1,32 @@
+{
+  "bizFlowApp": {
+    "product": {
+      "home": {
+        "title": "Products",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Product  సృష్టించండి",
+        "createOrEditLabel": "Product సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Products found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Product సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Product సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Product తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Product {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Product"
+      },
+      "id": "ID",
+      "name": "Name",
+      "category": "Category",
+      "description": "Description",
+      "buyPrice": "Buy Price",
+      "sellPrice": "Sell Price",
+      "stockQuantity": "Stock Quantity",
+      "lowStockAlert": "Low Stock Alert",
+      "barcode": "Barcode",
+      "active": "Active"
+    }
+  }
+}

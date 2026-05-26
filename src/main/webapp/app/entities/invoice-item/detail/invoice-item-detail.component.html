@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (invoiceItem(); as invoiceItemRef) {
+      <div>
+        <h2 data-cy="invoiceItemDetailsHeading"><span jhiTranslate="bizFlowApp.invoiceItem.detail.title">Invoice Item</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoiceItem.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.quantity }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoiceItem.price">Price</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.price }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoiceItem.totalAmount">Total Amount</span></dt>
+          <dd>
+            <span>{{ invoiceItemRef.totalAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoiceItem.product">Product</span></dt>
+          <dd>
+            @if (invoiceItem()!.product) {
+              <div>
+                <a [routerLink]="['/product', invoiceItem()!.product?.id, 'view']">{{ invoiceItemRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoiceItem.invoice">Invoice</span></dt>
+          <dd>
+            @if (invoiceItem()!.invoice) {
+              <div>
+                <a [routerLink]="['/invoice', invoiceItem()!.invoice?.id, 'view']">{{ invoiceItemRef.invoice?.invoiceNumber }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/invoice-item', invoiceItemRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

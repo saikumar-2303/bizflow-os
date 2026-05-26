@@ -1,0 +1,41 @@
+{
+  "annotations": {
+    "changelogDate": "20260520151300"
+  },
+  "applications": ["BizFlow"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "name",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "phone",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "designation",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "salary",
+      "fieldType": "BigDecimal"
+    },
+    {
+      "fieldName": "joiningDate",
+      "fieldType": "Instant"
+    },
+    {
+      "fieldName": "active",
+      "fieldType": "Boolean",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Employee",
+  "pagination": "pagination",
+  "relationships": [],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

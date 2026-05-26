@@ -1,0 +1,30 @@
+{
+  "bizFlowApp": {
+    "stockTransaction": {
+      "home": {
+        "title": "StockTransactions",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "नया Stock Transaction बनाएँ",
+        "createOrEditLabel": "Stock Transaction बनाएँ या संपादित करें",
+        "notFound": "No Stock Transactions found"
+      },
+      "created": "एक नया Stock Transaction [identifier: {{ param }}] तैयार है",
+      "updated": "एक Stock Transaction [identifier: {{ param }}] का अद्यतन हुआ है",
+      "deleted": "Stock Transaction [identifier: {{ param }}] हटा दिया है",
+      "delete": {
+        "question": "Stock Transaction [id: {{ id }}] हटाने की पुष्टि करें"
+      },
+      "detail": {
+        "title": "Stock Transaction"
+      },
+      "id": "ID",
+      "transactionType": "Transaction Type",
+      "quantity": "Quantity",
+      "previousStock": "Previous Stock",
+      "newStock": "New Stock",
+      "remarks": "Remarks",
+      "createdDate": "Created Date",
+      "product": "Product"
+    }
+  }
+}

@@ -1,0 +1,58 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (expense(); as expenseRef) {
+      <div>
+        <h2 data-cy="expenseDetailsHeading"><span jhiTranslate="bizFlowApp.expense.detail.title">Expense</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ expenseRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.expense.title">Title</span></dt>
+          <dd>
+            <span>{{ expenseRef.title }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.expense.category">Category</span></dt>
+          <dd>
+            <span>{{ expenseRef.category }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.expense.amount">Amount</span></dt>
+          <dd>
+            <span>{{ expenseRef.amount }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.expense.expenseDate">Expense Date</span></dt>
+          <dd>
+            <span>{{ expenseRef.expenseDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.expense.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ expenseRef.remarks }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.expense.employee">Employee</span></dt>
+          <dd>
+            @if (expense()!.employee) {
+              <div>
+                <a [routerLink]="['/employee', expense()!.employee?.id, 'view']">{{ expenseRef.employee?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/expense', expenseRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

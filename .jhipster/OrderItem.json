@@ -1,0 +1,43 @@
+{
+  "annotations": {
+    "changelogDate": "20260520151255"
+  },
+  "applications": ["BizFlow"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "quantity",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "price",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "totalAmount",
+      "fieldType": "BigDecimal",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "OrderItem",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "product",
+      "relationshipName": "product",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    },
+    {
+      "otherEntityField": "orderNumber",
+      "otherEntityName": "customerOrder",
+      "relationshipName": "order",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

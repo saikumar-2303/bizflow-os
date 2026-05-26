@@ -50,6 +50,15 @@ public class CacheConfiguration {
             createCache(cm, com.bizflow.app.domain.User.class.getName());
             createCache(cm, com.bizflow.app.domain.Authority.class.getName());
             createCache(cm, com.bizflow.app.domain.User.class.getName() + ".authorities");
+            createCache(cm, com.bizflow.app.domain.Product.class.getName());
+            createCache(cm, com.bizflow.app.domain.Customer.class.getName());
+            createCache(cm, com.bizflow.app.domain.CustomerOrder.class.getName());
+            createCache(cm, com.bizflow.app.domain.OrderItem.class.getName());
+            createCache(cm, com.bizflow.app.domain.Invoice.class.getName());
+            createCache(cm, com.bizflow.app.domain.InvoiceItem.class.getName());
+            createCache(cm, com.bizflow.app.domain.StockTransaction.class.getName());
+            createCache(cm, com.bizflow.app.domain.Expense.class.getName());
+            createCache(cm, com.bizflow.app.domain.Employee.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }

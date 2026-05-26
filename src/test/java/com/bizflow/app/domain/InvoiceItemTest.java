@@ -1,0 +1,50 @@
+package com.bizflow.app.domain;
+
+import static com.bizflow.app.domain.InvoiceItemTestSamples.*;
+import static com.bizflow.app.domain.InvoiceTestSamples.*;
+import static com.bizflow.app.domain.ProductTestSamples.*;
+import static org.assertj.core.api.Assertions.assertThat;
+
+import com.bizflow.app.web.rest.TestUtil;
+import org.junit.jupiter.api.Test;
+
+class InvoiceItemTest {
+
+    @Test
+    void equalsVerifier() throws Exception {
+        TestUtil.equalsVerifier(InvoiceItem.class);
+        InvoiceItem invoiceItem1 = getInvoiceItemSample1();
+        InvoiceItem invoiceItem2 = new InvoiceItem();
+        assertThat(invoiceItem1).isNotEqualTo(invoiceItem2);
+
+        invoiceItem2.setId(invoiceItem1.getId());
+        assertThat(invoiceItem1).isEqualTo(invoiceItem2);
+
+        invoiceItem2 = getInvoiceItemSample2();
+        assertThat(invoiceItem1).isNotEqualTo(invoiceItem2);
+    }
+
+    @Test
+    void productTest() {
+        InvoiceItem invoiceItem = getInvoiceItemRandomSampleGenerator();
+        Product productBack = getProductRandomSampleGenerator();
+
+        invoiceItem.setProduct(productBack);
+        assertThat(invoiceItem.getProduct()).isEqualTo(productBack);
+
+        invoiceItem.product(null);
+        assertThat(invoiceItem.getProduct()).isNull();
+    }
+
+    @Test
+    void invoiceTest() {
+        InvoiceItem invoiceItem = getInvoiceItemRandomSampleGenerator();
+        Invoice invoiceBack = getInvoiceRandomSampleGenerator();
+
+        invoiceItem.setInvoice(invoiceBack);
+        assertThat(invoiceItem.getInvoice()).isEqualTo(invoiceBack);
+
+        invoiceItem.invoice(null);
+        assertThat(invoiceItem.getInvoice()).isNull();
+    }
+}

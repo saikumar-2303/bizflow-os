@@ -1,0 +1,50 @@
+{
+  "annotations": {
+    "changelogDate": "20260520151258"
+  },
+  "applications": ["BizFlow"],
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "transactionType",
+      "fieldType": "String",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "quantity",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "previousStock",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "newStock",
+      "fieldType": "Integer",
+      "fieldValidateRules": ["required"]
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "createdDate",
+      "fieldType": "Instant",
+      "fieldValidateRules": ["required"]
+    }
+  ],
+  "name": "StockTransaction",
+  "relationships": [
+    {
+      "otherEntityField": "name",
+      "otherEntityName": "product",
+      "relationshipName": "product",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one"
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

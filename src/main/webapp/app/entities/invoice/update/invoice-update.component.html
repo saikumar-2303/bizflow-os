@@ -1,0 +1,205 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" novalidate (ngSubmit)="save()" [formGroup]="editForm">
+      <h2 id="jhi-invoice-heading" data-cy="InvoiceCreateUpdateHeading" jhiTranslate="bizFlowApp.invoice.home.createOrEditLabel">
+        Create or edit a Invoice
+      </h2>
+
+      <div>
+        <jhi-alert-error />
+
+        @if (editForm.controls.id.value !== null) {
+          <div class="mb-3">
+            <label class="form-label" for="field_id" jhiTranslate="bizFlowApp.invoice.id">ID</label>
+            <input type="number" class="form-control" name="id" id="field_id" data-cy="id" formControlName="id" [readonly]="true" />
+          </div>
+        }
+
+        @let invoiceNumberRef = editForm.get('invoiceNumber')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_invoiceNumber" jhiTranslate="bizFlowApp.invoice.invoiceNumber">Invoice Number</label>
+          <input
+            type="text"
+            class="form-control"
+            name="invoiceNumber"
+            id="field_invoiceNumber"
+            data-cy="invoiceNumber"
+            formControlName="invoiceNumber"
+          />
+          @if (invoiceNumberRef.invalid && (invoiceNumberRef.dirty || invoiceNumberRef.touched)) {
+            <div>
+              @if (editForm.get('invoiceNumber')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let totalAmountRef = editForm.get('totalAmount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_totalAmount" jhiTranslate="bizFlowApp.invoice.totalAmount">Total Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="totalAmount"
+            id="field_totalAmount"
+            data-cy="totalAmount"
+            formControlName="totalAmount"
+          />
+          @if (totalAmountRef.invalid && (totalAmountRef.dirty || totalAmountRef.touched)) {
+            <div>
+              @if (editForm.get('totalAmount')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('totalAmount')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let paidAmountRef = editForm.get('paidAmount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_paidAmount" jhiTranslate="bizFlowApp.invoice.paidAmount">Paid Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="paidAmount"
+            id="field_paidAmount"
+            data-cy="paidAmount"
+            formControlName="paidAmount"
+          />
+          @if (paidAmountRef.invalid && (paidAmountRef.dirty || paidAmountRef.touched)) {
+            <div>
+              @if (editForm.get('paidAmount')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('paidAmount')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let pendingAmountRef = editForm.get('pendingAmount')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_pendingAmount" jhiTranslate="bizFlowApp.invoice.pendingAmount">Pending Amount</label>
+          <input
+            type="number"
+            class="form-control"
+            name="pendingAmount"
+            id="field_pendingAmount"
+            data-cy="pendingAmount"
+            formControlName="pendingAmount"
+          />
+          @if (pendingAmountRef.invalid && (pendingAmountRef.dirty || pendingAmountRef.touched)) {
+            <div>
+              @if (editForm.get('pendingAmount')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('pendingAmount')?.errors?.number"
+                jhiTranslate="entity.validation.number"
+                >This field should be a number.</small
+              >
+            </div>
+          }
+        </div>
+
+        @let paymentStatusRef = editForm.get('paymentStatus')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_paymentStatus" jhiTranslate="bizFlowApp.invoice.paymentStatus">Payment Status</label>
+          <input
+            type="text"
+            class="form-control"
+            name="paymentStatus"
+            id="field_paymentStatus"
+            data-cy="paymentStatus"
+            formControlName="paymentStatus"
+          />
+          @if (paymentStatusRef.invalid && (paymentStatusRef.dirty || paymentStatusRef.touched)) {
+            <div>
+              @if (editForm.get('paymentStatus')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let createdDateRef = editForm.get('createdDate')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_createdDate" jhiTranslate="bizFlowApp.invoice.createdDate">Created Date</label>
+          <div class="d-flex">
+            <input
+              id="field_createdDate"
+              data-cy="createdDate"
+              type="datetime-local"
+              class="form-control"
+              name="createdDate"
+              formControlName="createdDate"
+              placeholder="YYYY-MM-DD HH:mm"
+            />
+          </div>
+          @if (createdDateRef.invalid && (createdDateRef.dirty || createdDateRef.touched)) {
+            <div>
+              @if (editForm.get('createdDate')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+              <small
+                class="form-text text-danger"
+                [hidden]="!editForm.get('createdDate')?.errors?.datetimelocal"
+                jhiTranslate="entity.validation.datetimelocal"
+                >This field should be a date and time.</small
+              >
+            </div>
+          }
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_remarks" jhiTranslate="bizFlowApp.invoice.remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_customer" jhiTranslate="bizFlowApp.invoice.customer">Customer</label>
+          <select
+            class="form-control"
+            id="field_customer"
+            data-cy="customer"
+            name="customer"
+            formControlName="customer"
+            [compareWith]="compareCustomer"
+          >
+            <option [ngValue]="null"></option>
+            @for (customerOption of customersSharedCollection; track $index) {
+              <option [ngValue]="customerOption">{{ customerOption.name }}</option>
+            }
+          </select>
+        </div>
+      </div>
+
+      <div>
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary" (click)="previousState()">
+          <fa-icon icon="ban"></fa-icon>&nbsp;<span jhiTranslate="entity.action.cancel">Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <fa-icon icon="save"></fa-icon>&nbsp;<span jhiTranslate="entity.action.save">Save</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

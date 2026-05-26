@@ -1,13 +1,30 @@
 <jhi-page-ribbon />
-
-<div>
-  <router-outlet name="navbar" />
+<!-- Navbar -->
+<div *ngIf="!hideLayout" class="fixed-top">
+  <router-outlet name="navbar"></router-outlet>
 </div>
 
-<div class="container-fluid">
-  <div class="card jh-card">
-    <router-outlet />
+<div class="d-flex min-vh-100 pt-5">
+  <!-- Sidebar -->
+  <div *ngIf="!hideLayout" class="sidebar-container min-vh-100 bg-dark">
+    <jhi-sidebar></jhi-sidebar>
   </div>
 
-  <jhi-footer />
+  <!-- Right Content -->
+  <div class="flex-grow-1 d-flex flex-column" [class.full-width]="hideLayout">
+    <!-- Main -->
+    <main class="container-fluid flex-grow-1 bg-warning">
+      <!-- Breadcrumb -->
+      <!-- <app-breadcrumb
+        *ngIf="!hideLayout"
+      ></app-breadcrumb> -->
+
+      <div class="card jh-card mt-5">
+        <!-- Dynamic Pages -->
+        <router-outlet></router-outlet>
+      </div>
+    </main>
+  </div>
 </div>
+<!-- Footer -->
+<jhi-footer *ngIf="!hideLayout" class="fixed-bottom"></jhi-footer>

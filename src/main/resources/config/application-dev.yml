@@ -21,6 +21,9 @@ logging:
     com.bizflow.app: DEBUG
 
 spring:
+  docker:
+    compose:
+      enabled: false
   devtools:
     restart:
       enabled: true
@@ -32,9 +35,9 @@ spring:
       indent-output: true
   datasource:
     type: com.zaxxer.hikari.HikariDataSource
-    url: jdbc:postgresql://localhost:5432/BizFlow
-    username: BizFlow
-    password:
+    url: jdbc:postgresql://localhost:5432/bizflow
+    username: postgres
+    password: root
     hikari:
       poolName: Hikari
       auto-commit: false
@@ -52,7 +55,7 @@ spring:
     cache: false
 
 server:
-  port: 8080
+  port: 9090
   # make sure requests the proxy uri instead of the server one
   forward-headers-strategy: native
 

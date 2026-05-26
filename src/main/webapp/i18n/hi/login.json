@@ -1,6 +1,7 @@
 {
   "login": {
-    "title": "साइन इन",
+    "title": "DTN पेपर उत्पाद",
+    "subtitle": "एडमिन पैनल लॉगिन",
     "form": {
       "password": "पासवर्ड",
       "password.placeholder": "अपना पासवर्ड टाइप करें",

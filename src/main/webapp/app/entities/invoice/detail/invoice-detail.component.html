@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (invoice(); as invoiceRef) {
+      <div>
+        <h2 data-cy="invoiceDetailsHeading"><span jhiTranslate="bizFlowApp.invoice.detail.title">Invoice</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ invoiceRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.invoiceNumber">Invoice Number</span></dt>
+          <dd>
+            <span>{{ invoiceRef.invoiceNumber }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.totalAmount">Total Amount</span></dt>
+          <dd>
+            <span>{{ invoiceRef.totalAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.paidAmount">Paid Amount</span></dt>
+          <dd>
+            <span>{{ invoiceRef.paidAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.pendingAmount">Pending Amount</span></dt>
+          <dd>
+            <span>{{ invoiceRef.pendingAmount }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.paymentStatus">Payment Status</span></dt>
+          <dd>
+            <span>{{ invoiceRef.paymentStatus }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ invoiceRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ invoiceRef.remarks }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.invoice.customer">Customer</span></dt>
+          <dd>
+            @if (invoice()!.customer) {
+              <div>
+                <a [routerLink]="['/customer', invoice()!.customer?.id, 'view']">{{ invoiceRef.customer?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/invoice', invoiceRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

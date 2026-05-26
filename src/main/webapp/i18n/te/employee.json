@@ -1,0 +1,29 @@
+{
+  "bizFlowApp": {
+    "employee": {
+      "home": {
+        "title": "Employees",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Employee  సృష్టించండి",
+        "createOrEditLabel": "Employee సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Employees found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Employee సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Employee సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Employee తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Employee {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Employee"
+      },
+      "id": "ID",
+      "name": "Name",
+      "phone": "Phone",
+      "designation": "Designation",
+      "salary": "Salary",
+      "joiningDate": "Joining Date",
+      "active": "Active"
+    }
+  }
+}

@@ -13,200 +13,124 @@ application {
     languages [en, hi, te]
     enableTranslation true
   }
-}
 
-/**
- * =========================
- * PRODUCT MANAGEMENT
- * =========================
- */
+  entities Product,
+           Customer,
+           CustomerOrder,
+           OrderItem,
+           Invoice,
+           InvoiceItem,
+           StockTransaction,
+           Expense,
+           Employee
+}
 
 entity Product {
-  name String required,
-  category String,
-  description String,
-  buyPrice BigDecimal required,
-  sellPrice BigDecimal required,
-  stockQuantity Integer required,
-  lowStockAlert Integer,
-  barcode String,
+  name String required
+  category String
+  description String
+  buyPrice BigDecimal required
+  sellPrice BigDecimal required
+  stockQuantity Integer required
+  lowStockAlert Integer
+  barcode String
   active Boolean required
 }
-
-/**
- * =========================
- * CUSTOMER MANAGEMENT
- * =========================
- */
 
 entity Customer {
-  name String required,
-  phone String,
-  address String,
-  pendingAmount BigDecimal,
+  name String required
+  phone String
+  address String
+  pendingAmount BigDecimal
   active Boolean required
 }
 
-/**
- * =========================
- * ORDER MANAGEMENT
- * =========================
- */
-
-entity Order {
-  orderNumber String required,
-  status String required,
-  totalAmount BigDecimal required,
-  createdDate Instant required,
+entity CustomerOrder {
+  orderNumber String required
+  status String required
+  totalAmount BigDecimal required
+  createdDate Instant required
   remarks String
 }
 
 entity OrderItem {
-  quantity Integer required,
-  price BigDecimal required,
+  quantity Integer required
+  price BigDecimal required
   totalAmount BigDecimal required
 }
 
-/**
- * =========================
- * INVOICE MANAGEMENT
- * =========================
- */
-
 entity Invoice {
-  invoiceNumber String required,
-  totalAmount BigDecimal required,
-  paidAmount BigDecimal required,
-  pendingAmount BigDecimal required,
-  paymentStatus String required,
-  createdDate Instant required,
+  invoiceNumber String required
+  totalAmount BigDecimal required
+  paidAmount BigDecimal required
+  pendingAmount BigDecimal required
+  paymentStatus String required
+  createdDate Instant required
   remarks String
 }
 
 entity InvoiceItem {
-  quantity Integer required,
-  price BigDecimal required,
+  quantity Integer required
+  price BigDecimal required
   totalAmount BigDecimal required
 }
 
-/**
- * =========================
- * STOCK MANAGEMENT
- * =========================
- */
-
 entity StockTransaction {
-  transactionType String required,
-  quantity Integer required,
-  previousStock Integer required,
-  newStock Integer required,
-  remarks String,
+  transactionType String required
+  quantity Integer required
+  previousStock Integer required
+  newStock Integer required
+  remarks String
   createdDate Instant required
 }
 
-/**
- * =========================
- * EXPENSE MANAGEMENT
- * =========================
- */
-
 entity Expense {
-  title String required,
-  category String,
-  amount BigDecimal required,
-  expenseDate Instant required,
+  title String required
+  category String
+  amount BigDecimal required
+  expenseDate Instant required
   remarks String
 }
 
-/**
- * =========================
- * EMPLOYEE MANAGEMENT
- * =========================
- */
-
 entity Employee {
-  name String required,
-  phone String,
-  designation String,
-  salary BigDecimal,
-  joiningDate Instant,
+  name String required
+  phone String
+  designation String
+  salary BigDecimal
+  joiningDate Instant
   active Boolean required
 }
 
-/**
- * =========================
- * RELATIONSHIPS
- * =========================
- */
-
 relationship ManyToOne {
+  CustomerOrder{customer(name)} to Customer
 
-  /**
-   * Orders
-   */
-  Order{customer(name)} to Customer
   OrderItem{product(name)} to Product
-  OrderItem{order(orderNumber)} to Order
+  OrderItem{order(orderNumber)} to CustomerOrder
 
-  /**
-   * Invoices
-   */
   Invoice{customer(name)} to Customer
+
   InvoiceItem{product(name)} to Product
   InvoiceItem{invoice(invoiceNumber)} to Invoice
 
-  /**
-   * Stock
-   */
   StockTransaction{product(name)} to Product
 
-  /**
-   * Expenses
-   */
   Expense{employee(name)} to Employee
 }
 
-/**
- * =========================
- * DTOs
- * =========================
- */
-
 dto * with mapstruct
-
-/**
- * =========================
- * SERVICES
- * =========================
- */
 
 service * with serviceClass
 
-/**
- * =========================
- * PAGINATION
- * =========================
- */
-
-paginate Product, Customer, Order, Invoice, Expense, Employee with pagination
-
-/**
- * =========================
- * FILTERING
- * =========================
- */
+paginate Product,
+         Customer,
+         CustomerOrder,
+         Invoice,
+         Expense,
+         Employee with pagination
 
 filter Product,
        Customer,
-       Order,
+       CustomerOrder,
        Invoice,
        Expense,
        Employee
-
-/**
- * =========================
- * MICROSERVICE SEARCH
- * =========================
- */
-
-search * with no

@@ -12,7 +12,22 @@
     <property name="timeType" value="time(6)" dbms="postgresql"/>
 
     <include file="config/liquibase/changelog/00000000000000_initial_schema.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151252_added_entity_Product.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151253_added_entity_Customer.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151254_added_entity_CustomerOrder.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151255_added_entity_OrderItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151256_added_entity_Invoice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151257_added_entity_InvoiceItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151258_added_entity_StockTransaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151259_added_entity_Expense.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151300_added_entity_Employee.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-changelog - JHipster will add liquibase changelogs here -->
+    <include file="config/liquibase/changelog/20260520151254_added_entity_constraints_CustomerOrder.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151255_added_entity_constraints_OrderItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151256_added_entity_constraints_Invoice.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151257_added_entity_constraints_InvoiceItem.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151258_added_entity_constraints_StockTransaction.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260520151259_added_entity_constraints_Expense.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

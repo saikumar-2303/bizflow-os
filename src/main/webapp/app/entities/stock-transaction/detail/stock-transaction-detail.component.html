@@ -1,0 +1,64 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (stockTransaction(); as stockTransactionRef) {
+      <div>
+        <h2 data-cy="stockTransactionDetailsHeading">
+          <span jhiTranslate="bizFlowApp.stockTransaction.detail.title">Stock Transaction</span>
+        </h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ stockTransactionRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.stockTransaction.transactionType">Transaction Type</span></dt>
+          <dd>
+            <span>{{ stockTransactionRef.transactionType }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.stockTransaction.quantity">Quantity</span></dt>
+          <dd>
+            <span>{{ stockTransactionRef.quantity }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.stockTransaction.previousStock">Previous Stock</span></dt>
+          <dd>
+            <span>{{ stockTransactionRef.previousStock }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.stockTransaction.newStock">New Stock</span></dt>
+          <dd>
+            <span>{{ stockTransactionRef.newStock }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.stockTransaction.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ stockTransactionRef.remarks }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.stockTransaction.createdDate">Created Date</span></dt>
+          <dd>
+            <span>{{ stockTransactionRef.createdDate | formatMediumDatetime }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.stockTransaction.product">Product</span></dt>
+          <dd>
+            @if (stockTransaction()!.product) {
+              <div>
+                <a [routerLink]="['/product', stockTransaction()!.product?.id, 'view']">{{ stockTransactionRef.product?.name }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/stock-transaction', stockTransactionRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

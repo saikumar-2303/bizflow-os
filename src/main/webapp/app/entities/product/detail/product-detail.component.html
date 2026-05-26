@@ -1,0 +1,66 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (product(); as productRef) {
+      <div>
+        <h2 data-cy="productDetailsHeading"><span jhiTranslate="bizFlowApp.product.detail.title">Product</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ productRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.name">Name</span></dt>
+          <dd>
+            <span>{{ productRef.name }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.category">Category</span></dt>
+          <dd>
+            <span>{{ productRef.category }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.description">Description</span></dt>
+          <dd>
+            <span>{{ productRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.buyPrice">Buy Price</span></dt>
+          <dd>
+            <span>{{ productRef.buyPrice }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.sellPrice">Sell Price</span></dt>
+          <dd>
+            <span>{{ productRef.sellPrice }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.stockQuantity">Stock Quantity</span></dt>
+          <dd>
+            <span>{{ productRef.stockQuantity }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.lowStockAlert">Low Stock Alert</span></dt>
+          <dd>
+            <span>{{ productRef.lowStockAlert }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.barcode">Barcode</span></dt>
+          <dd>
+            <span>{{ productRef.barcode }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.product.active">Active</span></dt>
+          <dd>
+            <span>{{ productRef.active }}</span>
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/product', productRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>
