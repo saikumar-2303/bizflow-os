@@ -6,11 +6,11 @@ import SidebarItem from './sidebar-item.model';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
-
+import { FaIconComponent } from '@fortawesome/angular-fontawesome';
 @Component({
   selector: 'jhi-sidebar',
   standalone: true,
-  imports: [RouterModule],
+  imports: [RouterModule, FaIconComponent],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })

@@ -1,7 +1,10 @@
 <div class="sidebar min-vh-100">
   <div class="btn-group-vertical" aria-label="Button group with nested dropdown">
     @for (item of entitiesSidebarItems; track item.route) {
-      <button type="button" class="btn btn-primary" [routerLink]="item.route" routerLinkActive="active">{{ item.name }}</button>
+      <button type="button" class="btn btn-primary" [routerLink]="item.route" routerLinkActive="active">
+        <i [class]="item.icon"></i>
+        <span>{{ item.name }}</span>
+      </button>
     }
   </div>
 </div>
