@@ -1,10 +1,31 @@
-<div class="sidebar min-vh-100">
-  <div class="btn-group-vertical" aria-label="Button group with nested dropdown">
-    @for (item of entitiesSidebarItems; track item.route) {
-      <button type="button" class="btn btn-primary" [routerLink]="item.route" routerLinkActive="active">
-        <i [class]="item.icon"></i>
-        <span>{{ item.name }}</span>
-      </button>
+<div class="sidebar collapsed" [class.collapsed]="isCollapsed">
+  <div class="sidebar-header">
+    <!-- TITLE -->
+    @if (!isCollapsed) {
+      <h5 class="logo-text">ERP System</h5>
     }
+
+    <!-- TOGGLE BUTTON -->
+    <button type="button" class="collapse-btn" (click)="sidebarToggle.emit()">
+      <i [class]="isCollapsed ? 'bi bi-chevron-right' : 'bi bi-chevron-left'"></i>
+    </button>
   </div>
+
+  <ul class="sidebar-menu">
+    @if (account !== null) {
+      @for (item of entitiesSidebarItems; track item.route) {
+        <li>
+          <a [routerLink]="item.route" routerLinkActive="active" class="menu-item collapsed" [class.collapsed]="isCollapsed">
+            <!-- ICON -->
+            <i [class]="item.icon"></i>
+
+            <!-- TEXT -->
+            @if (!isCollapsed) {
+              <span>{{ item.name }}</span>
+            }
+          </a>
+        </li>
+      }
+    }
+  </ul>
 </div>

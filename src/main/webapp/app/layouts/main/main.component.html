@@ -1,30 +1,66 @@
 <jhi-page-ribbon />
-<!-- Navbar -->
-<div *ngIf="!hideLayout" class="fixed-top">
-  <router-outlet name="navbar"></router-outlet>
-</div>
 
-<div class="d-flex min-vh-100 pt-5">
-  <!-- Sidebar -->
-  <div *ngIf="!hideLayout" class="sidebar-container min-vh-100 bg-dark">
-    <jhi-sidebar></jhi-sidebar>
+<!-- =========================================
+     ERP LAYOUT
+========================================= -->
+<div class="erp-layout" [class.full-layout]="hideLayout">
+  <!-- =========================================
+       TOP NAVBAR
+  ========================================= -->
+  <header *ngIf="!hideLayout" class="erp-navbar">
+    <router-outlet name="navbar"></router-outlet>
+  </header>
+
+  <!-- =========================================
+       MAIN BODY
+  ========================================= -->
+  <div class="erp-layout-body">
+    <!-- =========================================
+         SIDEBAR
+    ========================================= -->
+    <aside *ngIf="!hideLayout" class="erp-sidebar" class="erp-sidebar" [class.collapsed]="isSidebarCollapsed()">
+      <jhi-sidebar [isCollapsed]="isSidebarCollapsed()" (sidebarToggle)="toggleSidebar()"></jhi-sidebar>
+    </aside>
+
+    <!-- =========================================
+         MAIN AREA
+    ========================================= -->
+    <div class="erp-main">
+      <!-- =========================================
+           CONTENT AREA
+      ========================================= -->
+      <main class="erp-content">
+        <!-- =========================================
+             INNER PAGE NAVBAR
+        ========================================= -->
+        <nav class="navbar navbar-light bg-warning rounded-4 shadow-sm border inner-navbar">
+          <div class="container-fluid">
+            <!-- LEFT SIDE -->
+            <div class="d-flex align-items-center gap-2">
+              <span class="navbar-brand mb-0 h5 fw-bold"> Dashboard </span>
+            </div>
+
+            <!-- RIGHT SIDE -->
+            <div class="d-flex align-items-center gap-2">
+              <button class="btn btn-light border rounded-3">Refresh</button>
+
+              <button class="btn btn-primary rounded-3">Add New</button>
+            </div>
+          </div>
+        </nav>
+
+        <!-- =========================================
+             PAGE CONTENT CONTAINER
+        ========================================= -->
+        <div class="erp-page-container">
+          <!-- DYNAMIC PAGE CONTENT -->
+          <router-outlet></router-outlet>
+        </div>
+      </main>
+    </div>
   </div>
 
-  <!-- Right Content -->
-  <div class="flex-grow-1 d-flex flex-column" [class.full-width]="hideLayout">
-    <!-- Main -->
-    <main class="container-fluid flex-grow-1 bg-warning">
-      <!-- Breadcrumb -->
-      <!-- <app-breadcrumb
-        *ngIf="!hideLayout"
-      ></app-breadcrumb> -->
-
-      <div class="card jh-card mt-5">
-        <!-- Dynamic Pages -->
-        <router-outlet></router-outlet>
-      </div>
-    </main>
-  </div>
+  <footer *ngIf="!hideLayout" class="erp-footer">
+    <jhi-footer></jhi-footer>
+  </footer>
 </div>
-<!-- Footer -->
-<jhi-footer *ngIf="!hideLayout" class="fixed-bottom"></jhi-footer>

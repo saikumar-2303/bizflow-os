@@ -1,0 +1,174 @@
+/* =========================================
+   HEADER
+========================================= */
+
+.sidebar-header {
+  display: flex;
+
+  align-items: center;
+
+  justify-content: space-between;
+
+  padding: 20px;
+
+  color: #f6f4f3;
+
+  border-bottom: 1px solid #374151;
+
+  min-height: 70px;
+}
+
+/* =========================================
+   LOGO
+========================================= */
+
+.logo-text {
+  margin: 0;
+
+  font-size: 18px;
+
+  font-weight: 600;
+
+  white-space: nowrap;
+}
+
+/* =========================================
+   COLLAPSE BUTTON
+========================================= */
+
+.collapse-btn {
+  background: transparent;
+
+  border: none;
+
+  color: #f6f4f3;
+
+  cursor: pointer;
+
+  width: 36px;
+  height: 36px;
+
+  border-radius: 8px;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  transition: background 0.2s ease;
+}
+
+.collapse-btn:hover {
+  background: #ebbda5;
+  color: #232323;
+}
+
+/* Bootstrap icon size */
+
+.collapse-btn i {
+  font-size: 18px;
+}
+
+/* =========================================
+   MENU
+========================================= */
+
+.sidebar-menu {
+  list-style: none;
+
+  margin: 0;
+
+  padding: 10px 0;
+}
+
+.sidebar-menu li {
+  margin: 4px 10px;
+}
+
+/* =========================================
+   MENU ITEM
+========================================= */
+
+.menu-item {
+  display: flex;
+
+  align-items: center;
+
+  gap: 12px;
+
+  padding: 12px 15px;
+
+  border-radius: 10px;
+
+  text-decoration: none;
+
+  color: #f6f4f3;
+
+  transition: all 0.2s ease;
+
+  white-space: nowrap;
+}
+
+/* =========================================
+   ICON
+========================================= */
+
+.menu-item i {
+  font-size: 18px;
+
+  width: 22px;
+
+  min-width: 22px;
+
+  text-align: center;
+
+  color: inherit;
+}
+
+/* =========================================
+   HOVER
+========================================= */
+
+.menu-item:hover {
+  background: #ebbda5;
+
+  color: #232323;
+}
+
+/* =========================================
+   ACTIVE
+========================================= */
+
+.menu-item.active {
+  background: #663300;
+
+  color: #f6f4f3;
+
+  font-weight: 600;
+}
+.menu-item:hover i {
+  color: #f6f4f3;
+}
+.sidebar.collapsed .menu-item i {
+  color: #ebbda5;
+}
+.sidebar.collapsed .menu-item:hover i {
+  color: #232323;
+}
+
+/* =========================================
+   COLLAPSED MODE
+========================================= */
+
+// .erp-sidebar.collapsed .menu-item {
+//   justify-content: center;
+// }
+
+// .erp-sidebar.collapsed .sidebar-header {
+//   justify-content: center;
+// }
+
+// .erp-sidebar.collapsed .collapse-btn {
+//   margin: 0 auto;
+// }

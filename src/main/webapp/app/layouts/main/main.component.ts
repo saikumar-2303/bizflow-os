@@ -1,4 +1,4 @@
-import { Component, OnInit, Renderer2, RendererFactory2, inject } from '@angular/core';
+import { Component, OnInit, Renderer2, RendererFactory2, inject, signal, HostListener } from '@angular/core';
 
 import { CommonModule } from '@angular/common';
 
@@ -27,9 +27,10 @@ import { SidebarComponent } from 'app/sidebar/sidebar.component';
 
   // imports: [RouterOutlet, FooterComponent, PageRibbonComponent, SidebarComponent, BreadcrumbComponent],
   imports: [RouterOutlet, FooterComponent, PageRibbonComponent, CommonModule, SidebarComponent],
-  // styleUrl: 'main.component.css',
+  styleUrl: 'main.component.scss',
 })
 export default class MainComponent implements OnInit {
+  isSidebarCollapsed = signal(false);
   private readonly renderer: Renderer2;
 
   private readonly router = inject(Router);
@@ -66,12 +67,30 @@ export default class MainComponent implements OnInit {
 
       this.renderer.setAttribute(document.querySelector('html'), 'lang', langChangeEvent.lang);
     });
-
+    this.checkScreenSize();
     /* ROUTE CHANGE */
     this.router.events.subscribe(event => {
       if (event instanceof NavigationEnd) {
         this.hideLayout = this.hiddenRoutes.includes(this.router.url);
       }
     });
+  }
+  @HostListener('window:resize')
+  onResize(): void {
+    this.checkScreenSize();
+  }
+  checkScreenSize(): void {
+    if (window.innerWidth < 992) {
+      this.isSidebarCollapsed.set(true);
+    } else {
+      this.isSidebarCollapsed.set(false);
+    }
+  }
+  collapsesidebar(): void {
+    this.isSidebarCollapsed.set(true);
+  }
+
+  toggleSidebar(): void {
+    this.isSidebarCollapsed.update(isSidebarCollapsed => !isSidebarCollapsed);
   }
 }

@@ -41,7 +41,7 @@ export const EntitySidebarItems: SidebarItem[] = [
     name: 'InvoiceItem',
     route: '/invoice-item',
     translationKey: 'global.menu.entities.invoiceItem',
-    icon: 'bi bi-file-invoice',
+    icon: 'bi bi-receipt-cutoff',
   },
   {
     name: 'StockTransaction',
@@ -53,7 +53,7 @@ export const EntitySidebarItems: SidebarItem[] = [
     name: 'Expense',
     route: '/expense',
     translationKey: 'global.menu.entities.expense',
-    icon: 'bi bi-wallet',
+    icon: 'bi bi-currency-rupee',
   },
   {
     name: 'Employee',

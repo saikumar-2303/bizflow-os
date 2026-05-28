@@ -1,4 +1,4 @@
-import { Component, signal, inject, OnInit } from '@angular/core';
+import { Component, inject, OnInit, Input, Output, EventEmitter } from '@angular/core';
 import { EntitySidebarItems } from './sidebar-items-entities';
 import { LANGUAGES } from 'app/config/language.constants';
 import { AccountService } from 'app/core/auth/account.service';
@@ -6,17 +6,20 @@ import SidebarItem from './sidebar-item.model';
 import { StateStorageService } from 'app/core/auth/state-storage.service';
 import { TranslateService } from '@ngx-translate/core';
 import { Router, RouterModule } from '@angular/router';
-import { FaIconComponent } from '@fortawesome/angular-fontawesome';
+
 @Component({
   selector: 'jhi-sidebar',
   standalone: true,
-  imports: [RouterModule, FaIconComponent],
+  imports: [RouterModule],
   templateUrl: './sidebar.component.html',
   styleUrl: './sidebar.component.scss',
 })
 export class SidebarComponent implements OnInit {
   inProduction?: boolean;
-  isSidebarCollapsed = signal(true);
+  // isSidebarCollapsed = signal(true);
+  @Input() isCollapsed = false;
+
+  @Output() sidebarToggle = new EventEmitter<void>();
   languages = LANGUAGES;
   openAPIEnabled?: boolean;
   account = inject(AccountService).trackCurrentAccount();
@@ -35,11 +38,11 @@ export class SidebarComponent implements OnInit {
     this.translateService.use(languageKey);
   }
 
-  collapsesidebar(): void {
-    this.isSidebarCollapsed.set(true);
-  }
+  // collapsesidebar(): void {
+  //   this.isSidebarCollapsed.set(true);
+  // }
 
-  toggleSidebar(): void {
-    this.isSidebarCollapsed.update(isSidebarCollapsed => !isSidebarCollapsed);
-  }
+  // toggleSidebar(): void {
+  //   this.isSidebarCollapsed.update(isSidebarCollapsed => !isSidebarCollapsed);
+  // }
 }
