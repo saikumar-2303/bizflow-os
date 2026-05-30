@@ -76,15 +76,20 @@ class ProductCriteriaTest {
 
     private static void setAllFilters(ProductCriteria productCriteria) {
         productCriteria.id();
+        productCriteria.sku();
+        productCriteria.barcode();
         productCriteria.name();
         productCriteria.category();
+        productCriteria.shape();
+        productCriteria.retailPack();
+        productCriteria.wholesalePack();
         productCriteria.description();
-        productCriteria.buyPrice();
-        productCriteria.sellPrice();
         productCriteria.stockQuantity();
         productCriteria.lowStockAlert();
-        productCriteria.barcode();
-        productCriteria.active();
+        productCriteria.remarks();
+        productCriteria.location();
+        productCriteria.message();
+        productCriteria.value();
         productCriteria.distinct();
     }
 
@@ -92,15 +97,20 @@ class ProductCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId()) &&
+                condition.apply(criteria.getSku()) &&
+                condition.apply(criteria.getBarcode()) &&
                 condition.apply(criteria.getName()) &&
                 condition.apply(criteria.getCategory()) &&
+                condition.apply(criteria.getShape()) &&
+                condition.apply(criteria.getRetailPack()) &&
+                condition.apply(criteria.getWholesalePack()) &&
                 condition.apply(criteria.getDescription()) &&
-                condition.apply(criteria.getBuyPrice()) &&
-                condition.apply(criteria.getSellPrice()) &&
                 condition.apply(criteria.getStockQuantity()) &&
                 condition.apply(criteria.getLowStockAlert()) &&
-                condition.apply(criteria.getBarcode()) &&
-                condition.apply(criteria.getActive()) &&
+                condition.apply(criteria.getRemarks()) &&
+                condition.apply(criteria.getLocation()) &&
+                condition.apply(criteria.getMessage()) &&
+                condition.apply(criteria.getValue()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -110,15 +120,20 @@ class ProductCriteriaTest {
         return new Condition<>(
             criteria ->
                 condition.apply(criteria.getId(), copy.getId()) &&
+                condition.apply(criteria.getSku(), copy.getSku()) &&
+                condition.apply(criteria.getBarcode(), copy.getBarcode()) &&
                 condition.apply(criteria.getName(), copy.getName()) &&
                 condition.apply(criteria.getCategory(), copy.getCategory()) &&
+                condition.apply(criteria.getShape(), copy.getShape()) &&
+                condition.apply(criteria.getRetailPack(), copy.getRetailPack()) &&
+                condition.apply(criteria.getWholesalePack(), copy.getWholesalePack()) &&
                 condition.apply(criteria.getDescription(), copy.getDescription()) &&
-                condition.apply(criteria.getBuyPrice(), copy.getBuyPrice()) &&
-                condition.apply(criteria.getSellPrice(), copy.getSellPrice()) &&
                 condition.apply(criteria.getStockQuantity(), copy.getStockQuantity()) &&
                 condition.apply(criteria.getLowStockAlert(), copy.getLowStockAlert()) &&
-                condition.apply(criteria.getBarcode(), copy.getBarcode()) &&
-                condition.apply(criteria.getActive(), copy.getActive()) &&
+                condition.apply(criteria.getRemarks(), copy.getRemarks()) &&
+                condition.apply(criteria.getLocation(), copy.getLocation()) &&
+                condition.apply(criteria.getMessage(), copy.getMessage()) &&
+                condition.apply(criteria.getValue(), copy.getValue()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

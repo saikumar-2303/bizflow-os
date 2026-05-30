@@ -2,7 +2,6 @@ package com.bizflow.app.web.rest;
 
 import static com.bizflow.app.domain.ProductAsserts.*;
 import static com.bizflow.app.web.rest.TestUtil.createUpdateProxyForBean;
-import static com.bizflow.app.web.rest.TestUtil.sameNumber;
 import static org.assertj.core.api.Assertions.assertThat;
 import static org.hamcrest.Matchers.hasItem;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.*;
@@ -15,7 +14,6 @@ import com.bizflow.app.service.dto.ProductDTO;
 import com.bizflow.app.service.mapper.ProductMapper;
 import com.fasterxml.jackson.databind.ObjectMapper;
 import jakarta.persistence.EntityManager;
-import java.math.BigDecimal;
 import java.util.Random;
 import java.util.concurrent.atomic.AtomicLong;
 import org.junit.jupiter.api.AfterEach;
@@ -36,22 +34,31 @@ import org.springframework.transaction.annotation.Transactional;
 @WithMockUser
 class ProductResourceIT {
 
+    private static final String DEFAULT_SKU = "AAAAAAAAAA";
+    private static final String UPDATED_SKU = "BBBBBBBBBB";
+
+    private static final String DEFAULT_BARCODE = "AAAAAAAAAA";
+    private static final String UPDATED_BARCODE = "BBBBBBBBBB";
+
     private static final String DEFAULT_NAME = "AAAAAAAAAA";
     private static final String UPDATED_NAME = "BBBBBBBBBB";
 
     private static final String DEFAULT_CATEGORY = "AAAAAAAAAA";
     private static final String UPDATED_CATEGORY = "BBBBBBBBBB";
 
+    private static final String DEFAULT_SHAPE = "AAAAAAAAAA";
+    private static final String UPDATED_SHAPE = "BBBBBBBBBB";
+
+    private static final Integer DEFAULT_RETAIL_PACK = 1;
+    private static final Integer UPDATED_RETAIL_PACK = 2;
+    private static final Integer SMALLER_RETAIL_PACK = 1 - 1;
+
+    private static final Integer DEFAULT_WHOLESALE_PACK = 1;
+    private static final Integer UPDATED_WHOLESALE_PACK = 2;
+    private static final Integer SMALLER_WHOLESALE_PACK = 1 - 1;
+
     private static final String DEFAULT_DESCRIPTION = "AAAAAAAAAA";
     private static final String UPDATED_DESCRIPTION = "BBBBBBBBBB";
-
-    private static final BigDecimal DEFAULT_BUY_PRICE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_BUY_PRICE = new BigDecimal(2);
-    private static final BigDecimal SMALLER_BUY_PRICE = new BigDecimal(1 - 1);
-
-    private static final BigDecimal DEFAULT_SELL_PRICE = new BigDecimal(1);
-    private static final BigDecimal UPDATED_SELL_PRICE = new BigDecimal(2);
-    private static final BigDecimal SMALLER_SELL_PRICE = new BigDecimal(1 - 1);
 
     private static final Integer DEFAULT_STOCK_QUANTITY = 1;
     private static final Integer UPDATED_STOCK_QUANTITY = 2;
@@ -61,11 +68,17 @@ class ProductResourceIT {
     private static final Integer UPDATED_LOW_STOCK_ALERT = 2;
     private static final Integer SMALLER_LOW_STOCK_ALERT = 1 - 1;
 
-    private static final String DEFAULT_BARCODE = "AAAAAAAAAA";
-    private static final String UPDATED_BARCODE = "BBBBBBBBBB";
+    private static final String DEFAULT_REMARKS = "AAAAAAAAAA";
+    private static final String UPDATED_REMARKS = "BBBBBBBBBB";
 
-    private static final Boolean DEFAULT_ACTIVE = false;
-    private static final Boolean UPDATED_ACTIVE = true;
+    private static final String DEFAULT_LOCATION = "AAAAAAAAAA";
+    private static final String UPDATED_LOCATION = "BBBBBBBBBB";
+
+    private static final String DEFAULT_MESSAGE = "AAAAAAAAAA";
+    private static final String UPDATED_MESSAGE = "BBBBBBBBBB";
+
+    private static final String DEFAULT_VALUE = "AAAAAAAAAA";
+    private static final String UPDATED_VALUE = "BBBBBBBBBB";
 
     private static final String ENTITY_API_URL = "/api/products";
     private static final String ENTITY_API_URL_ID = ENTITY_API_URL + "/{id}";
@@ -100,15 +113,20 @@ class ProductResourceIT {
      */
     public static Product createEntity() {
         return new Product()
+            .sku(DEFAULT_SKU)
+            .barcode(DEFAULT_BARCODE)
             .name(DEFAULT_NAME)
             .category(DEFAULT_CATEGORY)
+            .shape(DEFAULT_SHAPE)
+            .retailPack(DEFAULT_RETAIL_PACK)
+            .wholesalePack(DEFAULT_WHOLESALE_PACK)
             .description(DEFAULT_DESCRIPTION)
-            .buyPrice(DEFAULT_BUY_PRICE)
-            .sellPrice(DEFAULT_SELL_PRICE)
             .stockQuantity(DEFAULT_STOCK_QUANTITY)
             .lowStockAlert(DEFAULT_LOW_STOCK_ALERT)
-            .barcode(DEFAULT_BARCODE)
-            .active(DEFAULT_ACTIVE);
+            .remarks(DEFAULT_REMARKS)
+            .location(DEFAULT_LOCATION)
+            .message(DEFAULT_MESSAGE)
+            .value(DEFAULT_VALUE);
     }
 
     /**
@@ -119,15 +137,20 @@ class ProductResourceIT {
      */
     public static Product createUpdatedEntity() {
         return new Product()
+            .sku(UPDATED_SKU)
+            .barcode(UPDATED_BARCODE)
             .name(UPDATED_NAME)
             .category(UPDATED_CATEGORY)
+            .shape(UPDATED_SHAPE)
+            .retailPack(UPDATED_RETAIL_PACK)
+            .wholesalePack(UPDATED_WHOLESALE_PACK)
             .description(UPDATED_DESCRIPTION)
-            .buyPrice(UPDATED_BUY_PRICE)
-            .sellPrice(UPDATED_SELL_PRICE)
             .stockQuantity(UPDATED_STOCK_QUANTITY)
             .lowStockAlert(UPDATED_LOW_STOCK_ALERT)
-            .barcode(UPDATED_BARCODE)
-            .active(UPDATED_ACTIVE);
+            .remarks(UPDATED_REMARKS)
+            .location(UPDATED_LOCATION)
+            .message(UPDATED_MESSAGE)
+            .value(UPDATED_VALUE);
     }
 
     @BeforeEach
@@ -187,78 +210,44 @@ class ProductResourceIT {
 
     @Test
     @Transactional
+    void checkSkuIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        product.setSku(null);
+
+        // Create the Product, which fails.
+        ProductDTO productDTO = productMapper.toDto(product);
+
+        restProductMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(productDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
+    void checkBarcodeIsRequired() throws Exception {
+        long databaseSizeBeforeTest = getRepositoryCount();
+        // set the field null
+        product.setBarcode(null);
+
+        // Create the Product, which fails.
+        ProductDTO productDTO = productMapper.toDto(product);
+
+        restProductMockMvc
+            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(productDTO)))
+            .andExpect(status().isBadRequest());
+
+        assertSameRepositoryCount(databaseSizeBeforeTest);
+    }
+
+    @Test
+    @Transactional
     void checkNameIsRequired() throws Exception {
         long databaseSizeBeforeTest = getRepositoryCount();
         // set the field null
         product.setName(null);
-
-        // Create the Product, which fails.
-        ProductDTO productDTO = productMapper.toDto(product);
-
-        restProductMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(productDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkBuyPriceIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        product.setBuyPrice(null);
-
-        // Create the Product, which fails.
-        ProductDTO productDTO = productMapper.toDto(product);
-
-        restProductMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(productDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkSellPriceIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        product.setSellPrice(null);
-
-        // Create the Product, which fails.
-        ProductDTO productDTO = productMapper.toDto(product);
-
-        restProductMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(productDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkStockQuantityIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        product.setStockQuantity(null);
-
-        // Create the Product, which fails.
-        ProductDTO productDTO = productMapper.toDto(product);
-
-        restProductMockMvc
-            .perform(post(ENTITY_API_URL).contentType(MediaType.APPLICATION_JSON).content(om.writeValueAsBytes(productDTO)))
-            .andExpect(status().isBadRequest());
-
-        assertSameRepositoryCount(databaseSizeBeforeTest);
-    }
-
-    @Test
-    @Transactional
-    void checkActiveIsRequired() throws Exception {
-        long databaseSizeBeforeTest = getRepositoryCount();
-        // set the field null
-        product.setActive(null);
 
         // Create the Product, which fails.
         ProductDTO productDTO = productMapper.toDto(product);
@@ -282,15 +271,20 @@ class ProductResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(product.getId().intValue())))
+            .andExpect(jsonPath("$.[*].sku").value(hasItem(DEFAULT_SKU)))
+            .andExpect(jsonPath("$.[*].barcode").value(hasItem(DEFAULT_BARCODE)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY)))
+            .andExpect(jsonPath("$.[*].shape").value(hasItem(DEFAULT_SHAPE)))
+            .andExpect(jsonPath("$.[*].retailPack").value(hasItem(DEFAULT_RETAIL_PACK)))
+            .andExpect(jsonPath("$.[*].wholesalePack").value(hasItem(DEFAULT_WHOLESALE_PACK)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].buyPrice").value(hasItem(sameNumber(DEFAULT_BUY_PRICE))))
-            .andExpect(jsonPath("$.[*].sellPrice").value(hasItem(sameNumber(DEFAULT_SELL_PRICE))))
             .andExpect(jsonPath("$.[*].stockQuantity").value(hasItem(DEFAULT_STOCK_QUANTITY)))
             .andExpect(jsonPath("$.[*].lowStockAlert").value(hasItem(DEFAULT_LOW_STOCK_ALERT)))
-            .andExpect(jsonPath("$.[*].barcode").value(hasItem(DEFAULT_BARCODE)))
-            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE)));
+            .andExpect(jsonPath("$.[*].remarks").value(hasItem(DEFAULT_REMARKS)))
+            .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION)))
+            .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE)))
+            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE)));
     }
 
     @Test
@@ -305,15 +299,20 @@ class ProductResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.id").value(product.getId().intValue()))
+            .andExpect(jsonPath("$.sku").value(DEFAULT_SKU))
+            .andExpect(jsonPath("$.barcode").value(DEFAULT_BARCODE))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME))
             .andExpect(jsonPath("$.category").value(DEFAULT_CATEGORY))
+            .andExpect(jsonPath("$.shape").value(DEFAULT_SHAPE))
+            .andExpect(jsonPath("$.retailPack").value(DEFAULT_RETAIL_PACK))
+            .andExpect(jsonPath("$.wholesalePack").value(DEFAULT_WHOLESALE_PACK))
             .andExpect(jsonPath("$.description").value(DEFAULT_DESCRIPTION))
-            .andExpect(jsonPath("$.buyPrice").value(sameNumber(DEFAULT_BUY_PRICE)))
-            .andExpect(jsonPath("$.sellPrice").value(sameNumber(DEFAULT_SELL_PRICE)))
             .andExpect(jsonPath("$.stockQuantity").value(DEFAULT_STOCK_QUANTITY))
             .andExpect(jsonPath("$.lowStockAlert").value(DEFAULT_LOW_STOCK_ALERT))
-            .andExpect(jsonPath("$.barcode").value(DEFAULT_BARCODE))
-            .andExpect(jsonPath("$.active").value(DEFAULT_ACTIVE));
+            .andExpect(jsonPath("$.remarks").value(DEFAULT_REMARKS))
+            .andExpect(jsonPath("$.location").value(DEFAULT_LOCATION))
+            .andExpect(jsonPath("$.message").value(DEFAULT_MESSAGE))
+            .andExpect(jsonPath("$.value").value(DEFAULT_VALUE));
     }
 
     @Test
@@ -329,6 +328,106 @@ class ProductResourceIT {
         defaultProductFiltering("id.greaterThanOrEqual=" + id, "id.greaterThan=" + id);
 
         defaultProductFiltering("id.lessThanOrEqual=" + id, "id.lessThan=" + id);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsBySkuIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where sku equals to
+        defaultProductFiltering("sku.equals=" + DEFAULT_SKU, "sku.equals=" + UPDATED_SKU);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsBySkuIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where sku in
+        defaultProductFiltering("sku.in=" + DEFAULT_SKU + "," + UPDATED_SKU, "sku.in=" + UPDATED_SKU);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsBySkuIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where sku is not null
+        defaultProductFiltering("sku.specified=true", "sku.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsBySkuContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where sku contains
+        defaultProductFiltering("sku.contains=" + DEFAULT_SKU, "sku.contains=" + UPDATED_SKU);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsBySkuNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where sku does not contain
+        defaultProductFiltering("sku.doesNotContain=" + UPDATED_SKU, "sku.doesNotContain=" + DEFAULT_SKU);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByBarcodeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where barcode equals to
+        defaultProductFiltering("barcode.equals=" + DEFAULT_BARCODE, "barcode.equals=" + UPDATED_BARCODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByBarcodeIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where barcode in
+        defaultProductFiltering("barcode.in=" + DEFAULT_BARCODE + "," + UPDATED_BARCODE, "barcode.in=" + UPDATED_BARCODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByBarcodeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where barcode is not null
+        defaultProductFiltering("barcode.specified=true", "barcode.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByBarcodeContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where barcode contains
+        defaultProductFiltering("barcode.contains=" + DEFAULT_BARCODE, "barcode.contains=" + UPDATED_BARCODE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByBarcodeNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where barcode does not contain
+        defaultProductFiltering("barcode.doesNotContain=" + UPDATED_BARCODE, "barcode.doesNotContain=" + DEFAULT_BARCODE);
     }
 
     @Test
@@ -433,6 +532,211 @@ class ProductResourceIT {
 
     @Test
     @Transactional
+    void getAllProductsByShapeIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where shape equals to
+        defaultProductFiltering("shape.equals=" + DEFAULT_SHAPE, "shape.equals=" + UPDATED_SHAPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByShapeIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where shape in
+        defaultProductFiltering("shape.in=" + DEFAULT_SHAPE + "," + UPDATED_SHAPE, "shape.in=" + UPDATED_SHAPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByShapeIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where shape is not null
+        defaultProductFiltering("shape.specified=true", "shape.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByShapeContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where shape contains
+        defaultProductFiltering("shape.contains=" + DEFAULT_SHAPE, "shape.contains=" + UPDATED_SHAPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByShapeNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where shape does not contain
+        defaultProductFiltering("shape.doesNotContain=" + UPDATED_SHAPE, "shape.doesNotContain=" + DEFAULT_SHAPE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByRetailPackIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where retailPack equals to
+        defaultProductFiltering("retailPack.equals=" + DEFAULT_RETAIL_PACK, "retailPack.equals=" + UPDATED_RETAIL_PACK);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByRetailPackIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where retailPack in
+        defaultProductFiltering("retailPack.in=" + DEFAULT_RETAIL_PACK + "," + UPDATED_RETAIL_PACK, "retailPack.in=" + UPDATED_RETAIL_PACK);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByRetailPackIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where retailPack is not null
+        defaultProductFiltering("retailPack.specified=true", "retailPack.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByRetailPackIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where retailPack is greater than or equal to
+        defaultProductFiltering(
+            "retailPack.greaterThanOrEqual=" + DEFAULT_RETAIL_PACK,
+            "retailPack.greaterThanOrEqual=" + UPDATED_RETAIL_PACK
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByRetailPackIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where retailPack is less than or equal to
+        defaultProductFiltering("retailPack.lessThanOrEqual=" + DEFAULT_RETAIL_PACK, "retailPack.lessThanOrEqual=" + SMALLER_RETAIL_PACK);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByRetailPackIsLessThanSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where retailPack is less than
+        defaultProductFiltering("retailPack.lessThan=" + UPDATED_RETAIL_PACK, "retailPack.lessThan=" + DEFAULT_RETAIL_PACK);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByRetailPackIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where retailPack is greater than
+        defaultProductFiltering("retailPack.greaterThan=" + SMALLER_RETAIL_PACK, "retailPack.greaterThan=" + DEFAULT_RETAIL_PACK);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByWholesalePackIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where wholesalePack equals to
+        defaultProductFiltering("wholesalePack.equals=" + DEFAULT_WHOLESALE_PACK, "wholesalePack.equals=" + UPDATED_WHOLESALE_PACK);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByWholesalePackIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where wholesalePack in
+        defaultProductFiltering(
+            "wholesalePack.in=" + DEFAULT_WHOLESALE_PACK + "," + UPDATED_WHOLESALE_PACK,
+            "wholesalePack.in=" + UPDATED_WHOLESALE_PACK
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByWholesalePackIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where wholesalePack is not null
+        defaultProductFiltering("wholesalePack.specified=true", "wholesalePack.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByWholesalePackIsGreaterThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where wholesalePack is greater than or equal to
+        defaultProductFiltering(
+            "wholesalePack.greaterThanOrEqual=" + DEFAULT_WHOLESALE_PACK,
+            "wholesalePack.greaterThanOrEqual=" + UPDATED_WHOLESALE_PACK
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByWholesalePackIsLessThanOrEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where wholesalePack is less than or equal to
+        defaultProductFiltering(
+            "wholesalePack.lessThanOrEqual=" + DEFAULT_WHOLESALE_PACK,
+            "wholesalePack.lessThanOrEqual=" + SMALLER_WHOLESALE_PACK
+        );
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByWholesalePackIsLessThanSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where wholesalePack is less than
+        defaultProductFiltering("wholesalePack.lessThan=" + UPDATED_WHOLESALE_PACK, "wholesalePack.lessThan=" + DEFAULT_WHOLESALE_PACK);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByWholesalePackIsGreaterThanSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where wholesalePack is greater than
+        defaultProductFiltering(
+            "wholesalePack.greaterThan=" + SMALLER_WHOLESALE_PACK,
+            "wholesalePack.greaterThan=" + DEFAULT_WHOLESALE_PACK
+        );
+    }
+
+    @Test
+    @Transactional
     void getAllProductsByDescriptionIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
@@ -482,146 +786,6 @@ class ProductResourceIT {
 
         // Get all the productList where description does not contain
         defaultProductFiltering("description.doesNotContain=" + UPDATED_DESCRIPTION, "description.doesNotContain=" + DEFAULT_DESCRIPTION);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsByBuyPriceIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where buyPrice equals to
-        defaultProductFiltering("buyPrice.equals=" + DEFAULT_BUY_PRICE, "buyPrice.equals=" + UPDATED_BUY_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsByBuyPriceIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where buyPrice in
-        defaultProductFiltering("buyPrice.in=" + DEFAULT_BUY_PRICE + "," + UPDATED_BUY_PRICE, "buyPrice.in=" + UPDATED_BUY_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsByBuyPriceIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where buyPrice is not null
-        defaultProductFiltering("buyPrice.specified=true", "buyPrice.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsByBuyPriceIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where buyPrice is greater than or equal to
-        defaultProductFiltering("buyPrice.greaterThanOrEqual=" + DEFAULT_BUY_PRICE, "buyPrice.greaterThanOrEqual=" + UPDATED_BUY_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsByBuyPriceIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where buyPrice is less than or equal to
-        defaultProductFiltering("buyPrice.lessThanOrEqual=" + DEFAULT_BUY_PRICE, "buyPrice.lessThanOrEqual=" + SMALLER_BUY_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsByBuyPriceIsLessThanSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where buyPrice is less than
-        defaultProductFiltering("buyPrice.lessThan=" + UPDATED_BUY_PRICE, "buyPrice.lessThan=" + DEFAULT_BUY_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsByBuyPriceIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where buyPrice is greater than
-        defaultProductFiltering("buyPrice.greaterThan=" + SMALLER_BUY_PRICE, "buyPrice.greaterThan=" + DEFAULT_BUY_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsBySellPriceIsEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where sellPrice equals to
-        defaultProductFiltering("sellPrice.equals=" + DEFAULT_SELL_PRICE, "sellPrice.equals=" + UPDATED_SELL_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsBySellPriceIsInShouldWork() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where sellPrice in
-        defaultProductFiltering("sellPrice.in=" + DEFAULT_SELL_PRICE + "," + UPDATED_SELL_PRICE, "sellPrice.in=" + UPDATED_SELL_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsBySellPriceIsNullOrNotNull() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where sellPrice is not null
-        defaultProductFiltering("sellPrice.specified=true", "sellPrice.specified=false");
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsBySellPriceIsGreaterThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where sellPrice is greater than or equal to
-        defaultProductFiltering("sellPrice.greaterThanOrEqual=" + DEFAULT_SELL_PRICE, "sellPrice.greaterThanOrEqual=" + UPDATED_SELL_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsBySellPriceIsLessThanOrEqualToSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where sellPrice is less than or equal to
-        defaultProductFiltering("sellPrice.lessThanOrEqual=" + DEFAULT_SELL_PRICE, "sellPrice.lessThanOrEqual=" + SMALLER_SELL_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsBySellPriceIsLessThanSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where sellPrice is less than
-        defaultProductFiltering("sellPrice.lessThan=" + UPDATED_SELL_PRICE, "sellPrice.lessThan=" + DEFAULT_SELL_PRICE);
-    }
-
-    @Test
-    @Transactional
-    void getAllProductsBySellPriceIsGreaterThanSomething() throws Exception {
-        // Initialize the database
-        insertedProduct = productRepository.saveAndFlush(product);
-
-        // Get all the productList where sellPrice is greater than
-        defaultProductFiltering("sellPrice.greaterThan=" + SMALLER_SELL_PRICE, "sellPrice.greaterThan=" + DEFAULT_SELL_PRICE);
     }
 
     @Test
@@ -790,82 +954,202 @@ class ProductResourceIT {
 
     @Test
     @Transactional
-    void getAllProductsByBarcodeIsEqualToSomething() throws Exception {
+    void getAllProductsByRemarksIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where barcode equals to
-        defaultProductFiltering("barcode.equals=" + DEFAULT_BARCODE, "barcode.equals=" + UPDATED_BARCODE);
+        // Get all the productList where remarks equals to
+        defaultProductFiltering("remarks.equals=" + DEFAULT_REMARKS, "remarks.equals=" + UPDATED_REMARKS);
     }
 
     @Test
     @Transactional
-    void getAllProductsByBarcodeIsInShouldWork() throws Exception {
+    void getAllProductsByRemarksIsInShouldWork() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where barcode in
-        defaultProductFiltering("barcode.in=" + DEFAULT_BARCODE + "," + UPDATED_BARCODE, "barcode.in=" + UPDATED_BARCODE);
+        // Get all the productList where remarks in
+        defaultProductFiltering("remarks.in=" + DEFAULT_REMARKS + "," + UPDATED_REMARKS, "remarks.in=" + UPDATED_REMARKS);
     }
 
     @Test
     @Transactional
-    void getAllProductsByBarcodeIsNullOrNotNull() throws Exception {
+    void getAllProductsByRemarksIsNullOrNotNull() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where barcode is not null
-        defaultProductFiltering("barcode.specified=true", "barcode.specified=false");
+        // Get all the productList where remarks is not null
+        defaultProductFiltering("remarks.specified=true", "remarks.specified=false");
     }
 
     @Test
     @Transactional
-    void getAllProductsByBarcodeContainsSomething() throws Exception {
+    void getAllProductsByRemarksContainsSomething() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where barcode contains
-        defaultProductFiltering("barcode.contains=" + DEFAULT_BARCODE, "barcode.contains=" + UPDATED_BARCODE);
+        // Get all the productList where remarks contains
+        defaultProductFiltering("remarks.contains=" + DEFAULT_REMARKS, "remarks.contains=" + UPDATED_REMARKS);
     }
 
     @Test
     @Transactional
-    void getAllProductsByBarcodeNotContainsSomething() throws Exception {
+    void getAllProductsByRemarksNotContainsSomething() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where barcode does not contain
-        defaultProductFiltering("barcode.doesNotContain=" + UPDATED_BARCODE, "barcode.doesNotContain=" + DEFAULT_BARCODE);
+        // Get all the productList where remarks does not contain
+        defaultProductFiltering("remarks.doesNotContain=" + UPDATED_REMARKS, "remarks.doesNotContain=" + DEFAULT_REMARKS);
     }
 
     @Test
     @Transactional
-    void getAllProductsByActiveIsEqualToSomething() throws Exception {
+    void getAllProductsByLocationIsEqualToSomething() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where active equals to
-        defaultProductFiltering("active.equals=" + DEFAULT_ACTIVE, "active.equals=" + UPDATED_ACTIVE);
+        // Get all the productList where location equals to
+        defaultProductFiltering("location.equals=" + DEFAULT_LOCATION, "location.equals=" + UPDATED_LOCATION);
     }
 
     @Test
     @Transactional
-    void getAllProductsByActiveIsInShouldWork() throws Exception {
+    void getAllProductsByLocationIsInShouldWork() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where active in
-        defaultProductFiltering("active.in=" + DEFAULT_ACTIVE + "," + UPDATED_ACTIVE, "active.in=" + UPDATED_ACTIVE);
+        // Get all the productList where location in
+        defaultProductFiltering("location.in=" + DEFAULT_LOCATION + "," + UPDATED_LOCATION, "location.in=" + UPDATED_LOCATION);
     }
 
     @Test
     @Transactional
-    void getAllProductsByActiveIsNullOrNotNull() throws Exception {
+    void getAllProductsByLocationIsNullOrNotNull() throws Exception {
         // Initialize the database
         insertedProduct = productRepository.saveAndFlush(product);
 
-        // Get all the productList where active is not null
-        defaultProductFiltering("active.specified=true", "active.specified=false");
+        // Get all the productList where location is not null
+        defaultProductFiltering("location.specified=true", "location.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByLocationContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where location contains
+        defaultProductFiltering("location.contains=" + DEFAULT_LOCATION, "location.contains=" + UPDATED_LOCATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByLocationNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where location does not contain
+        defaultProductFiltering("location.doesNotContain=" + UPDATED_LOCATION, "location.doesNotContain=" + DEFAULT_LOCATION);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByMessageIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where message equals to
+        defaultProductFiltering("message.equals=" + DEFAULT_MESSAGE, "message.equals=" + UPDATED_MESSAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByMessageIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where message in
+        defaultProductFiltering("message.in=" + DEFAULT_MESSAGE + "," + UPDATED_MESSAGE, "message.in=" + UPDATED_MESSAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByMessageIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where message is not null
+        defaultProductFiltering("message.specified=true", "message.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByMessageContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where message contains
+        defaultProductFiltering("message.contains=" + DEFAULT_MESSAGE, "message.contains=" + UPDATED_MESSAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByMessageNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where message does not contain
+        defaultProductFiltering("message.doesNotContain=" + UPDATED_MESSAGE, "message.doesNotContain=" + DEFAULT_MESSAGE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByValueIsEqualToSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where value equals to
+        defaultProductFiltering("value.equals=" + DEFAULT_VALUE, "value.equals=" + UPDATED_VALUE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByValueIsInShouldWork() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where value in
+        defaultProductFiltering("value.in=" + DEFAULT_VALUE + "," + UPDATED_VALUE, "value.in=" + UPDATED_VALUE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByValueIsNullOrNotNull() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where value is not null
+        defaultProductFiltering("value.specified=true", "value.specified=false");
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByValueContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where value contains
+        defaultProductFiltering("value.contains=" + DEFAULT_VALUE, "value.contains=" + UPDATED_VALUE);
+    }
+
+    @Test
+    @Transactional
+    void getAllProductsByValueNotContainsSomething() throws Exception {
+        // Initialize the database
+        insertedProduct = productRepository.saveAndFlush(product);
+
+        // Get all the productList where value does not contain
+        defaultProductFiltering("value.doesNotContain=" + UPDATED_VALUE, "value.doesNotContain=" + DEFAULT_VALUE);
     }
 
     private void defaultProductFiltering(String shouldBeFound, String shouldNotBeFound) throws Exception {
@@ -882,15 +1166,20 @@ class ProductResourceIT {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON_VALUE))
             .andExpect(jsonPath("$.[*].id").value(hasItem(product.getId().intValue())))
+            .andExpect(jsonPath("$.[*].sku").value(hasItem(DEFAULT_SKU)))
+            .andExpect(jsonPath("$.[*].barcode").value(hasItem(DEFAULT_BARCODE)))
             .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME)))
             .andExpect(jsonPath("$.[*].category").value(hasItem(DEFAULT_CATEGORY)))
+            .andExpect(jsonPath("$.[*].shape").value(hasItem(DEFAULT_SHAPE)))
+            .andExpect(jsonPath("$.[*].retailPack").value(hasItem(DEFAULT_RETAIL_PACK)))
+            .andExpect(jsonPath("$.[*].wholesalePack").value(hasItem(DEFAULT_WHOLESALE_PACK)))
             .andExpect(jsonPath("$.[*].description").value(hasItem(DEFAULT_DESCRIPTION)))
-            .andExpect(jsonPath("$.[*].buyPrice").value(hasItem(sameNumber(DEFAULT_BUY_PRICE))))
-            .andExpect(jsonPath("$.[*].sellPrice").value(hasItem(sameNumber(DEFAULT_SELL_PRICE))))
             .andExpect(jsonPath("$.[*].stockQuantity").value(hasItem(DEFAULT_STOCK_QUANTITY)))
             .andExpect(jsonPath("$.[*].lowStockAlert").value(hasItem(DEFAULT_LOW_STOCK_ALERT)))
-            .andExpect(jsonPath("$.[*].barcode").value(hasItem(DEFAULT_BARCODE)))
-            .andExpect(jsonPath("$.[*].active").value(hasItem(DEFAULT_ACTIVE)));
+            .andExpect(jsonPath("$.[*].remarks").value(hasItem(DEFAULT_REMARKS)))
+            .andExpect(jsonPath("$.[*].location").value(hasItem(DEFAULT_LOCATION)))
+            .andExpect(jsonPath("$.[*].message").value(hasItem(DEFAULT_MESSAGE)))
+            .andExpect(jsonPath("$.[*].value").value(hasItem(DEFAULT_VALUE)));
 
         // Check, that the count call also returns 1
         restProductMockMvc
@@ -939,15 +1228,20 @@ class ProductResourceIT {
         // Disconnect from session so that the updates on updatedProduct are not directly saved in db
         em.detach(updatedProduct);
         updatedProduct
+            .sku(UPDATED_SKU)
+            .barcode(UPDATED_BARCODE)
             .name(UPDATED_NAME)
             .category(UPDATED_CATEGORY)
+            .shape(UPDATED_SHAPE)
+            .retailPack(UPDATED_RETAIL_PACK)
+            .wholesalePack(UPDATED_WHOLESALE_PACK)
             .description(UPDATED_DESCRIPTION)
-            .buyPrice(UPDATED_BUY_PRICE)
-            .sellPrice(UPDATED_SELL_PRICE)
             .stockQuantity(UPDATED_STOCK_QUANTITY)
             .lowStockAlert(UPDATED_LOW_STOCK_ALERT)
-            .barcode(UPDATED_BARCODE)
-            .active(UPDATED_ACTIVE);
+            .remarks(UPDATED_REMARKS)
+            .location(UPDATED_LOCATION)
+            .message(UPDATED_MESSAGE)
+            .value(UPDATED_VALUE);
         ProductDTO productDTO = productMapper.toDto(updatedProduct);
 
         restProductMockMvc
@@ -1034,12 +1328,12 @@ class ProductResourceIT {
         partialUpdatedProduct.setId(product.getId());
 
         partialUpdatedProduct
+            .sku(UPDATED_SKU)
             .name(UPDATED_NAME)
+            .wholesalePack(UPDATED_WHOLESALE_PACK)
             .description(UPDATED_DESCRIPTION)
-            .buyPrice(UPDATED_BUY_PRICE)
-            .sellPrice(UPDATED_SELL_PRICE)
-            .stockQuantity(UPDATED_STOCK_QUANTITY)
-            .lowStockAlert(UPDATED_LOW_STOCK_ALERT);
+            .lowStockAlert(UPDATED_LOW_STOCK_ALERT)
+            .message(UPDATED_MESSAGE);
 
         restProductMockMvc
             .perform(
@@ -1068,15 +1362,20 @@ class ProductResourceIT {
         partialUpdatedProduct.setId(product.getId());
 
         partialUpdatedProduct
+            .sku(UPDATED_SKU)
+            .barcode(UPDATED_BARCODE)
             .name(UPDATED_NAME)
             .category(UPDATED_CATEGORY)
+            .shape(UPDATED_SHAPE)
+            .retailPack(UPDATED_RETAIL_PACK)
+            .wholesalePack(UPDATED_WHOLESALE_PACK)
             .description(UPDATED_DESCRIPTION)
-            .buyPrice(UPDATED_BUY_PRICE)
-            .sellPrice(UPDATED_SELL_PRICE)
             .stockQuantity(UPDATED_STOCK_QUANTITY)
             .lowStockAlert(UPDATED_LOW_STOCK_ALERT)
-            .barcode(UPDATED_BARCODE)
-            .active(UPDATED_ACTIVE);
+            .remarks(UPDATED_REMARKS)
+            .location(UPDATED_LOCATION)
+            .message(UPDATED_MESSAGE)
+            .value(UPDATED_VALUE);
 
         restProductMockMvc
             .perform(

@@ -1,11 +1,11 @@
-id;name;category;description;buy_price;sell_price;stock_quantity;low_stock_alert;barcode;active
-1;though;forenenst if;now unto;27419.92;26964.03;13157;16782;vol disapprove who;false
-2;youthfully sign instead;whirlwind;by;29368.93;14656.74;22717;19147;other cinch;true
-3;sheepishly out near;director;consequently when;6804.27;5889.44;2578;26876;vice suddenly;true
-4;pish;gee;inasmuch;10828.81;15519.42;24749;15339;um yowza kaleidoscopic;true
-5;unfortunately than;quicker;massive failing;25649.01;14248.98;12942;1328;greatly gaseous;true
-6;story;instead likewise for;though;2997.63;28630.03;5087;21943;meanwhile;false
-7;inasmuch to;incidentally psst onto;structure federate likewise;3660.17;5862.19;20066;18981;fencing meander;false
-8;where negligible;politely;where;17930.37;4723.63;8491;11426;partially condense depot;false
-9;er;why;come brr gracefully;16179.26;13514.54;7236;29884;if mundane past;true
-10;vacation accompanist;round left;qua knavishly phrase;29201.65;14555.75;16229;19750;gee;true
+id;sku;barcode;name;category;shape;retail_pack;wholesale_pack;description;stock_quantity;low_stock_alert;remarks;location;message;value
+1;though;forenenst if;now unto;dependable after apropos;circulate;23883;6499;asset granular object;19696;26151;vice yahoo including;successfully;bah um;now hourly consequently
+2;fooey athwart unaccountably;prohibition secularize yuck;inasmuch dearly spew;nicely moisten;freckle;26811;5688;waltz soupy between;30023;415;meh regarding;psst whether;after through charm;boo before charming
+3;yum;neatly rust yum;tune-up;wring tattered;mobility violently;10673;30224;league where;21227;24904;hungrily whose nasalise;paltry;of;traditionalism
+4;oof;aboard;warped character firsthand;mmm misappropriate;scornful jaggedly vacation;8854;7134;incidentally monster;7110;25255;agile provided;fellow;pixellate competent steep;apropos
+5;humidity fondly;um structure;mathematics plump;gloss adumbrate denitrify;platter;14407;27961;but hydrant;1813;31650;aha confiscate iterate;curry mathematics unless;napkin;curse
+6;gosh highly metal;quicker;divert;brr inside bah;if whoa;19897;16262;pinstripe;20566;19309;hefty;yowza ugh advanced;terribly reach hospitalization;including fooey
+7;lest qua ack;aboard infatuated stunt;mostly;weary woot impure;than;31553;25193;emulsify;14644;17448;pish;apropos;role plus thorny;poorly wherever
+8;provided;powerfully round calculus;instantly;how spherical politely;confirm foodstuffs;16586;20715;allegation;28604;2848;which;for fortunately essential;phooey;avow except
+9;gladly;unto;misfire deeply but;amidst reschedule mob;requirement while;14464;11386;low whose who;25022;27123;extremely prioritize disadvantage;where unless fiercely;um aha extremely;yowza yum transplant
+10;consequently;hastily trivial;reflate ugh bitterly;arrogantly;red;369;29203;distinct;12731;31974;because;or;gum;ew sneak

@@ -1,0 +1,22 @@
+-- products list 30/05/2026
+INSERT INTO product (
+    id,
+    sku,
+    barcode,
+    name,
+    category,
+    shape,
+    retail_pack,
+    wholesale_pack,
+    description
+) VALUES
+(1,'PLT-GRN-SQR-009-090','8749152361','Plate','GREEN','SQUARE',9,90,'Green Square Plate 9x90'),
+(2,'PLT-GRN-SQR-010-100','9614285734','Plate','GREEN','SQUARE',10,100,'Green Square Plate 10x100'),
+(3,'PLT-GRN-SQR-012-120','7186359428','Plate','GREEN','SQUARE',12,120,'Green Square Plate 12x120'),
+(4,'PLT-GRN-SQR-018-180','8527419637','Plate','GREEN','SQUARE',18,180,'Green Square Plate 18x180'),
+(5,'PLT-GRN-SQR-019-190','9362148751','Plate','GREEN','SQUARE',19,190,'Green Square Plate 19x190'),
+(6,'PLT-GRN-RND-009-090','6849273518','Plate','GREEN','ROUND',9,90,'Green Round Plate 9x90'),
+(7,'PLT-GRN-RND-010-100','7953186247','Plate','GREEN','ROUND',10,100,'Green Round Plate 10x100'),
+(8,'PLT-GRN-RND-012-120','8215749364','Plate','GREEN','ROUND',12,120,'Green Round Plate 12x120'),
+(9,'PLT-GRN-RND-018-180','9436817258','Plate','GREEN','ROUND',18,180,'Green Round Plate 18x180'),
+(10,'PLT-GRN-RND-019-190','7568294137','Plate','GREEN','ROUND',19,190,'Green Round Plate 19x190');

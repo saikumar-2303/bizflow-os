@@ -440,7 +440,8 @@ class StockTransactionResourceIT {
 
         partialUpdatedStockTransaction
             .transactionType(UPDATED_TRANSACTION_TYPE)
-            .newStock(UPDATED_NEW_STOCK)
+            .previousStock(UPDATED_PREVIOUS_STOCK)
+            .remarks(UPDATED_REMARKS)
             .createdDate(UPDATED_CREATED_DATE);
 
         restStockTransactionMockMvc

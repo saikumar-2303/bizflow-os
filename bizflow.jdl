@@ -26,15 +26,20 @@ application {
 }
 
 entity Product {
+  sku String required unique
+  barcode String required unique
   name String required
   category String
+  shape String
+  retailPack Integer
+  wholesalePack Integer
   description String
-  buyPrice BigDecimal required
-  sellPrice BigDecimal required
-  stockQuantity Integer required
+  stockQuantity Integer
   lowStockAlert Integer
-  barcode String
-  active Boolean required
+  remarks String
+  location String
+  message String
+  value String
 }
 
 entity Customer {

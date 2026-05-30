@@ -769,11 +769,7 @@ class CustomerOrderResourceIT {
         CustomerOrder partialUpdatedCustomerOrder = new CustomerOrder();
         partialUpdatedCustomerOrder.setId(customerOrder.getId());
 
-        partialUpdatedCustomerOrder
-            .orderNumber(UPDATED_ORDER_NUMBER)
-            .status(UPDATED_STATUS)
-            .createdDate(UPDATED_CREATED_DATE)
-            .remarks(UPDATED_REMARKS);
+        partialUpdatedCustomerOrder.orderNumber(UPDATED_ORDER_NUMBER).status(UPDATED_STATUS);
 
         restCustomerOrderMockMvc
             .perform(

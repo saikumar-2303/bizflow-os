@@ -73,15 +73,20 @@ public class ProductQueryService extends QueryService<Product> {
             specification = Specification.allOf(
                 Boolean.TRUE.equals(criteria.getDistinct()) ? distinct(criteria.getDistinct()) : null,
                 buildRangeSpecification(criteria.getId(), Product_.id),
+                buildStringSpecification(criteria.getSku(), Product_.sku),
+                buildStringSpecification(criteria.getBarcode(), Product_.barcode),
                 buildStringSpecification(criteria.getName(), Product_.name),
                 buildStringSpecification(criteria.getCategory(), Product_.category),
+                buildStringSpecification(criteria.getShape(), Product_.shape),
+                buildRangeSpecification(criteria.getRetailPack(), Product_.retailPack),
+                buildRangeSpecification(criteria.getWholesalePack(), Product_.wholesalePack),
                 buildStringSpecification(criteria.getDescription(), Product_.description),
-                buildRangeSpecification(criteria.getBuyPrice(), Product_.buyPrice),
-                buildRangeSpecification(criteria.getSellPrice(), Product_.sellPrice),
                 buildRangeSpecification(criteria.getStockQuantity(), Product_.stockQuantity),
                 buildRangeSpecification(criteria.getLowStockAlert(), Product_.lowStockAlert),
-                buildStringSpecification(criteria.getBarcode(), Product_.barcode),
-                buildSpecification(criteria.getActive(), Product_.active)
+                buildStringSpecification(criteria.getRemarks(), Product_.remarks),
+                buildStringSpecification(criteria.getLocation(), Product_.location),
+                buildStringSpecification(criteria.getMessage(), Product_.message),
+                buildStringSpecification(criteria.getValue(), Product_.value)
             );
         }
         return specification;

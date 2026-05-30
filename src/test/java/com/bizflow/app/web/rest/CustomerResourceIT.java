@@ -672,7 +672,7 @@ class CustomerResourceIT {
         Customer partialUpdatedCustomer = new Customer();
         partialUpdatedCustomer.setId(customer.getId());
 
-        partialUpdatedCustomer.address(UPDATED_ADDRESS).pendingAmount(UPDATED_PENDING_AMOUNT).active(UPDATED_ACTIVE);
+        partialUpdatedCustomer.name(UPDATED_NAME).address(UPDATED_ADDRESS).pendingAmount(UPDATED_PENDING_AMOUNT);
 
         restCustomerMockMvc
             .perform(

@@ -6,6 +6,16 @@
   "dto": "mapstruct",
   "fields": [
     {
+      "fieldName": "sku",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "barcode",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
       "fieldName": "name",
       "fieldType": "String",
       "fieldValidateRules": ["required"]
@@ -15,36 +25,44 @@
       "fieldType": "String"
     },
     {
+      "fieldName": "shape",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "retailPack",
+      "fieldType": "Integer"
+    },
+    {
+      "fieldName": "wholesalePack",
+      "fieldType": "Integer"
+    },
+    {
       "fieldName": "description",
       "fieldType": "String"
     },
     {
-      "fieldName": "buyPrice",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": ["required"]
-    },
-    {
-      "fieldName": "sellPrice",
-      "fieldType": "BigDecimal",
-      "fieldValidateRules": ["required"]
-    },
-    {
       "fieldName": "stockQuantity",
-      "fieldType": "Integer",
-      "fieldValidateRules": ["required"]
+      "fieldType": "Integer"
     },
     {
       "fieldName": "lowStockAlert",
       "fieldType": "Integer"
     },
     {
-      "fieldName": "barcode",
+      "fieldName": "remarks",
       "fieldType": "String"
     },
     {
-      "fieldName": "active",
-      "fieldType": "Boolean",
-      "fieldValidateRules": ["required"]
+      "fieldName": "location",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "message",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "value",
+      "fieldType": "String"
     }
   ],
   "jpaMetamodelFiltering": true,

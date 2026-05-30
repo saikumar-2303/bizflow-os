@@ -980,7 +980,11 @@ class InvoiceResourceIT {
         Invoice partialUpdatedInvoice = new Invoice();
         partialUpdatedInvoice.setId(invoice.getId());
 
-        partialUpdatedInvoice.invoiceNumber(UPDATED_INVOICE_NUMBER).pendingAmount(UPDATED_PENDING_AMOUNT);
+        partialUpdatedInvoice
+            .paidAmount(UPDATED_PAID_AMOUNT)
+            .pendingAmount(UPDATED_PENDING_AMOUNT)
+            .createdDate(UPDATED_CREATED_DATE)
+            .remarks(UPDATED_REMARKS);
 
         restInvoiceMockMvc
             .perform(

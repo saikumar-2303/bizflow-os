@@ -371,7 +371,7 @@ class InvoiceItemResourceIT {
         InvoiceItem partialUpdatedInvoiceItem = new InvoiceItem();
         partialUpdatedInvoiceItem.setId(invoiceItem.getId());
 
-        partialUpdatedInvoiceItem.totalAmount(UPDATED_TOTAL_AMOUNT);
+        partialUpdatedInvoiceItem.quantity(UPDATED_QUANTITY).totalAmount(UPDATED_TOTAL_AMOUNT);
 
         restInvoiceItemMockMvc
             .perform(

@@ -2,42 +2,43 @@ import { IProduct, NewProduct } from './product.model';
 
 export const sampleWithRequiredData: IProduct = {
   id: 11737,
-  name: 'hm sleepily',
-  buyPrice: 17510.56,
-  sellPrice: 1843.12,
-  stockQuantity: 24770,
-  active: true,
+  sku: 'hm sleepily',
+  barcode: 'yippee whoever',
+  name: 'mortally loftily',
 };
 
 export const sampleWithPartialData: IProduct = {
-  id: 31533,
-  name: 'almost tempting fervently',
-  description: 'ick for',
-  buyPrice: 26.65,
-  sellPrice: 8672.51,
-  stockQuantity: 4492,
-  active: true,
+  id: 5830,
+  sku: 'tempting',
+  barcode: 'majestically ick',
+  name: 'abnegate',
+  shape: 'between',
+  lowStockAlert: 20654,
+  remarks: 'taro',
 };
 
 export const sampleWithFullData: IProduct = {
   id: 4403,
-  name: 'cafe',
-  category: 'along amongst',
-  description: 'hm ugh',
-  buyPrice: 2989.07,
-  sellPrice: 1604.77,
-  stockQuantity: 24746,
-  lowStockAlert: 6387,
-  barcode: 'bah though pear',
-  active: true,
+  sku: 'cafe',
+  barcode: 'along amongst',
+  name: 'hm ugh',
+  category: 'fatally',
+  shape: 'headline incidentally hence',
+  retailPack: 207,
+  wholesalePack: 31489,
+  description: 'drowse under ferociously',
+  stockQuantity: 28862,
+  lowStockAlert: 5948,
+  remarks: 'lest leap solemnly',
+  location: 'usually gosh',
+  message: 'cannon impractical',
+  value: 'rotten psst',
 };
 
 export const sampleWithNewData: NewProduct = {
-  name: 'anti inject why',
-  buyPrice: 26562.23,
-  sellPrice: 4718.75,
-  stockQuantity: 6371,
-  active: false,
+  sku: 'anti inject why',
+  barcode: 'anenst narrow apropos',
+  name: 'pace',
   id: null,
 };
 

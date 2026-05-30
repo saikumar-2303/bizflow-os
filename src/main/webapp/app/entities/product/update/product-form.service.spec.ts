@@ -20,15 +20,20 @@ describe('Product Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            sku: expect.any(Object),
+            barcode: expect.any(Object),
             name: expect.any(Object),
             category: expect.any(Object),
+            shape: expect.any(Object),
+            retailPack: expect.any(Object),
+            wholesalePack: expect.any(Object),
             description: expect.any(Object),
-            buyPrice: expect.any(Object),
-            sellPrice: expect.any(Object),
             stockQuantity: expect.any(Object),
             lowStockAlert: expect.any(Object),
-            barcode: expect.any(Object),
-            active: expect.any(Object),
+            remarks: expect.any(Object),
+            location: expect.any(Object),
+            message: expect.any(Object),
+            value: expect.any(Object),
           }),
         );
       });
@@ -39,15 +44,20 @@ describe('Product Form Service', () => {
         expect(formGroup.controls).toEqual(
           expect.objectContaining({
             id: expect.any(Object),
+            sku: expect.any(Object),
+            barcode: expect.any(Object),
             name: expect.any(Object),
             category: expect.any(Object),
+            shape: expect.any(Object),
+            retailPack: expect.any(Object),
+            wholesalePack: expect.any(Object),
             description: expect.any(Object),
-            buyPrice: expect.any(Object),
-            sellPrice: expect.any(Object),
             stockQuantity: expect.any(Object),
             lowStockAlert: expect.any(Object),
-            barcode: expect.any(Object),
-            active: expect.any(Object),
+            remarks: expect.any(Object),
+            location: expect.any(Object),
+            message: expect.any(Object),
+            value: expect.any(Object),
           }),
         );
       });

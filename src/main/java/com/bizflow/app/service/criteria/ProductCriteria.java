@@ -24,23 +24,33 @@ public class ProductCriteria implements Serializable, Criteria {
 
     private LongFilter id;
 
+    private StringFilter sku;
+
+    private StringFilter barcode;
+
     private StringFilter name;
 
     private StringFilter category;
 
+    private StringFilter shape;
+
+    private IntegerFilter retailPack;
+
+    private IntegerFilter wholesalePack;
+
     private StringFilter description;
-
-    private BigDecimalFilter buyPrice;
-
-    private BigDecimalFilter sellPrice;
 
     private IntegerFilter stockQuantity;
 
     private IntegerFilter lowStockAlert;
 
-    private StringFilter barcode;
+    private StringFilter remarks;
 
-    private BooleanFilter active;
+    private StringFilter location;
+
+    private StringFilter message;
+
+    private StringFilter value;
 
     private Boolean distinct;
 
@@ -48,15 +58,20 @@ public class ProductCriteria implements Serializable, Criteria {
 
     public ProductCriteria(ProductCriteria other) {
         this.id = other.optionalId().map(LongFilter::copy).orElse(null);
+        this.sku = other.optionalSku().map(StringFilter::copy).orElse(null);
+        this.barcode = other.optionalBarcode().map(StringFilter::copy).orElse(null);
         this.name = other.optionalName().map(StringFilter::copy).orElse(null);
         this.category = other.optionalCategory().map(StringFilter::copy).orElse(null);
+        this.shape = other.optionalShape().map(StringFilter::copy).orElse(null);
+        this.retailPack = other.optionalRetailPack().map(IntegerFilter::copy).orElse(null);
+        this.wholesalePack = other.optionalWholesalePack().map(IntegerFilter::copy).orElse(null);
         this.description = other.optionalDescription().map(StringFilter::copy).orElse(null);
-        this.buyPrice = other.optionalBuyPrice().map(BigDecimalFilter::copy).orElse(null);
-        this.sellPrice = other.optionalSellPrice().map(BigDecimalFilter::copy).orElse(null);
         this.stockQuantity = other.optionalStockQuantity().map(IntegerFilter::copy).orElse(null);
         this.lowStockAlert = other.optionalLowStockAlert().map(IntegerFilter::copy).orElse(null);
-        this.barcode = other.optionalBarcode().map(StringFilter::copy).orElse(null);
-        this.active = other.optionalActive().map(BooleanFilter::copy).orElse(null);
+        this.remarks = other.optionalRemarks().map(StringFilter::copy).orElse(null);
+        this.location = other.optionalLocation().map(StringFilter::copy).orElse(null);
+        this.message = other.optionalMessage().map(StringFilter::copy).orElse(null);
+        this.value = other.optionalValue().map(StringFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -82,6 +97,44 @@ public class ProductCriteria implements Serializable, Criteria {
 
     public void setId(LongFilter id) {
         this.id = id;
+    }
+
+    public StringFilter getSku() {
+        return sku;
+    }
+
+    public Optional<StringFilter> optionalSku() {
+        return Optional.ofNullable(sku);
+    }
+
+    public StringFilter sku() {
+        if (sku == null) {
+            setSku(new StringFilter());
+        }
+        return sku;
+    }
+
+    public void setSku(StringFilter sku) {
+        this.sku = sku;
+    }
+
+    public StringFilter getBarcode() {
+        return barcode;
+    }
+
+    public Optional<StringFilter> optionalBarcode() {
+        return Optional.ofNullable(barcode);
+    }
+
+    public StringFilter barcode() {
+        if (barcode == null) {
+            setBarcode(new StringFilter());
+        }
+        return barcode;
+    }
+
+    public void setBarcode(StringFilter barcode) {
+        this.barcode = barcode;
     }
 
     public StringFilter getName() {
@@ -122,6 +175,63 @@ public class ProductCriteria implements Serializable, Criteria {
         this.category = category;
     }
 
+    public StringFilter getShape() {
+        return shape;
+    }
+
+    public Optional<StringFilter> optionalShape() {
+        return Optional.ofNullable(shape);
+    }
+
+    public StringFilter shape() {
+        if (shape == null) {
+            setShape(new StringFilter());
+        }
+        return shape;
+    }
+
+    public void setShape(StringFilter shape) {
+        this.shape = shape;
+    }
+
+    public IntegerFilter getRetailPack() {
+        return retailPack;
+    }
+
+    public Optional<IntegerFilter> optionalRetailPack() {
+        return Optional.ofNullable(retailPack);
+    }
+
+    public IntegerFilter retailPack() {
+        if (retailPack == null) {
+            setRetailPack(new IntegerFilter());
+        }
+        return retailPack;
+    }
+
+    public void setRetailPack(IntegerFilter retailPack) {
+        this.retailPack = retailPack;
+    }
+
+    public IntegerFilter getWholesalePack() {
+        return wholesalePack;
+    }
+
+    public Optional<IntegerFilter> optionalWholesalePack() {
+        return Optional.ofNullable(wholesalePack);
+    }
+
+    public IntegerFilter wholesalePack() {
+        if (wholesalePack == null) {
+            setWholesalePack(new IntegerFilter());
+        }
+        return wholesalePack;
+    }
+
+    public void setWholesalePack(IntegerFilter wholesalePack) {
+        this.wholesalePack = wholesalePack;
+    }
+
     public StringFilter getDescription() {
         return description;
     }
@@ -139,44 +249,6 @@ public class ProductCriteria implements Serializable, Criteria {
 
     public void setDescription(StringFilter description) {
         this.description = description;
-    }
-
-    public BigDecimalFilter getBuyPrice() {
-        return buyPrice;
-    }
-
-    public Optional<BigDecimalFilter> optionalBuyPrice() {
-        return Optional.ofNullable(buyPrice);
-    }
-
-    public BigDecimalFilter buyPrice() {
-        if (buyPrice == null) {
-            setBuyPrice(new BigDecimalFilter());
-        }
-        return buyPrice;
-    }
-
-    public void setBuyPrice(BigDecimalFilter buyPrice) {
-        this.buyPrice = buyPrice;
-    }
-
-    public BigDecimalFilter getSellPrice() {
-        return sellPrice;
-    }
-
-    public Optional<BigDecimalFilter> optionalSellPrice() {
-        return Optional.ofNullable(sellPrice);
-    }
-
-    public BigDecimalFilter sellPrice() {
-        if (sellPrice == null) {
-            setSellPrice(new BigDecimalFilter());
-        }
-        return sellPrice;
-    }
-
-    public void setSellPrice(BigDecimalFilter sellPrice) {
-        this.sellPrice = sellPrice;
     }
 
     public IntegerFilter getStockQuantity() {
@@ -217,42 +289,80 @@ public class ProductCriteria implements Serializable, Criteria {
         this.lowStockAlert = lowStockAlert;
     }
 
-    public StringFilter getBarcode() {
-        return barcode;
+    public StringFilter getRemarks() {
+        return remarks;
     }
 
-    public Optional<StringFilter> optionalBarcode() {
-        return Optional.ofNullable(barcode);
+    public Optional<StringFilter> optionalRemarks() {
+        return Optional.ofNullable(remarks);
     }
 
-    public StringFilter barcode() {
-        if (barcode == null) {
-            setBarcode(new StringFilter());
+    public StringFilter remarks() {
+        if (remarks == null) {
+            setRemarks(new StringFilter());
         }
-        return barcode;
+        return remarks;
     }
 
-    public void setBarcode(StringFilter barcode) {
-        this.barcode = barcode;
+    public void setRemarks(StringFilter remarks) {
+        this.remarks = remarks;
     }
 
-    public BooleanFilter getActive() {
-        return active;
+    public StringFilter getLocation() {
+        return location;
     }
 
-    public Optional<BooleanFilter> optionalActive() {
-        return Optional.ofNullable(active);
+    public Optional<StringFilter> optionalLocation() {
+        return Optional.ofNullable(location);
     }
 
-    public BooleanFilter active() {
-        if (active == null) {
-            setActive(new BooleanFilter());
+    public StringFilter location() {
+        if (location == null) {
+            setLocation(new StringFilter());
         }
-        return active;
+        return location;
     }
 
-    public void setActive(BooleanFilter active) {
-        this.active = active;
+    public void setLocation(StringFilter location) {
+        this.location = location;
+    }
+
+    public StringFilter getMessage() {
+        return message;
+    }
+
+    public Optional<StringFilter> optionalMessage() {
+        return Optional.ofNullable(message);
+    }
+
+    public StringFilter message() {
+        if (message == null) {
+            setMessage(new StringFilter());
+        }
+        return message;
+    }
+
+    public void setMessage(StringFilter message) {
+        this.message = message;
+    }
+
+    public StringFilter getValue() {
+        return value;
+    }
+
+    public Optional<StringFilter> optionalValue() {
+        return Optional.ofNullable(value);
+    }
+
+    public StringFilter value() {
+        if (value == null) {
+            setValue(new StringFilter());
+        }
+        return value;
+    }
+
+    public void setValue(StringFilter value) {
+        this.value = value;
     }
 
     public Boolean getDistinct() {
@@ -285,22 +395,44 @@ public class ProductCriteria implements Serializable, Criteria {
         final ProductCriteria that = (ProductCriteria) o;
         return (
             Objects.equals(id, that.id) &&
+            Objects.equals(sku, that.sku) &&
+            Objects.equals(barcode, that.barcode) &&
             Objects.equals(name, that.name) &&
             Objects.equals(category, that.category) &&
+            Objects.equals(shape, that.shape) &&
+            Objects.equals(retailPack, that.retailPack) &&
+            Objects.equals(wholesalePack, that.wholesalePack) &&
             Objects.equals(description, that.description) &&
-            Objects.equals(buyPrice, that.buyPrice) &&
-            Objects.equals(sellPrice, that.sellPrice) &&
             Objects.equals(stockQuantity, that.stockQuantity) &&
             Objects.equals(lowStockAlert, that.lowStockAlert) &&
-            Objects.equals(barcode, that.barcode) &&
-            Objects.equals(active, that.active) &&
+            Objects.equals(remarks, that.remarks) &&
+            Objects.equals(location, that.location) &&
+            Objects.equals(message, that.message) &&
+            Objects.equals(value, that.value) &&
             Objects.equals(distinct, that.distinct)
         );
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(id, name, category, description, buyPrice, sellPrice, stockQuantity, lowStockAlert, barcode, active, distinct);
+        return Objects.hash(
+            id,
+            sku,
+            barcode,
+            name,
+            category,
+            shape,
+            retailPack,
+            wholesalePack,
+            description,
+            stockQuantity,
+            lowStockAlert,
+            remarks,
+            location,
+            message,
+            value,
+            distinct
+        );
     }
 
     // prettier-ignore
@@ -308,15 +440,20 @@ public class ProductCriteria implements Serializable, Criteria {
     public String toString() {
         return "ProductCriteria{" +
             optionalId().map(f -> "id=" + f + ", ").orElse("") +
+            optionalSku().map(f -> "sku=" + f + ", ").orElse("") +
+            optionalBarcode().map(f -> "barcode=" + f + ", ").orElse("") +
             optionalName().map(f -> "name=" + f + ", ").orElse("") +
             optionalCategory().map(f -> "category=" + f + ", ").orElse("") +
+            optionalShape().map(f -> "shape=" + f + ", ").orElse("") +
+            optionalRetailPack().map(f -> "retailPack=" + f + ", ").orElse("") +
+            optionalWholesalePack().map(f -> "wholesalePack=" + f + ", ").orElse("") +
             optionalDescription().map(f -> "description=" + f + ", ").orElse("") +
-            optionalBuyPrice().map(f -> "buyPrice=" + f + ", ").orElse("") +
-            optionalSellPrice().map(f -> "sellPrice=" + f + ", ").orElse("") +
             optionalStockQuantity().map(f -> "stockQuantity=" + f + ", ").orElse("") +
             optionalLowStockAlert().map(f -> "lowStockAlert=" + f + ", ").orElse("") +
-            optionalBarcode().map(f -> "barcode=" + f + ", ").orElse("") +
-            optionalActive().map(f -> "active=" + f + ", ").orElse("") +
+            optionalRemarks().map(f -> "remarks=" + f + ", ").orElse("") +
+            optionalLocation().map(f -> "location=" + f + ", ").orElse("") +
+            optionalMessage().map(f -> "message=" + f + ", ").orElse("") +
+            optionalValue().map(f -> "value=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

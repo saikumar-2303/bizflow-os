@@ -14,19 +14,24 @@ type PartialWithRequiredKeyOf<T extends { id: unknown }> = Partial<Omit<T, 'id'>
  */
 type ProductFormGroupInput = IProduct | PartialWithRequiredKeyOf<NewProduct>;
 
-type ProductFormDefaults = Pick<NewProduct, 'id' | 'active'>;
+type ProductFormDefaults = Pick<NewProduct, 'id'>;
 
 type ProductFormGroupContent = {
   id: FormControl<IProduct['id'] | NewProduct['id']>;
+  sku: FormControl<IProduct['sku']>;
+  barcode: FormControl<IProduct['barcode']>;
   name: FormControl<IProduct['name']>;
   category: FormControl<IProduct['category']>;
+  shape: FormControl<IProduct['shape']>;
+  retailPack: FormControl<IProduct['retailPack']>;
+  wholesalePack: FormControl<IProduct['wholesalePack']>;
   description: FormControl<IProduct['description']>;
-  buyPrice: FormControl<IProduct['buyPrice']>;
-  sellPrice: FormControl<IProduct['sellPrice']>;
   stockQuantity: FormControl<IProduct['stockQuantity']>;
   lowStockAlert: FormControl<IProduct['lowStockAlert']>;
-  barcode: FormControl<IProduct['barcode']>;
-  active: FormControl<IProduct['active']>;
+  remarks: FormControl<IProduct['remarks']>;
+  location: FormControl<IProduct['location']>;
+  message: FormControl<IProduct['message']>;
+  value: FormControl<IProduct['value']>;
 };
 
 export type ProductFormGroup = FormGroup<ProductFormGroupContent>;
@@ -46,25 +51,26 @@ export class ProductFormService {
           validators: [Validators.required],
         },
       ),
+      sku: new FormControl(productRawValue.sku, {
+        validators: [Validators.required],
+      }),
+      barcode: new FormControl(productRawValue.barcode, {
+        validators: [Validators.required],
+      }),
       name: new FormControl(productRawValue.name, {
         validators: [Validators.required],
       }),
       category: new FormControl(productRawValue.category),
+      shape: new FormControl(productRawValue.shape),
+      retailPack: new FormControl(productRawValue.retailPack),
+      wholesalePack: new FormControl(productRawValue.wholesalePack),
       description: new FormControl(productRawValue.description),
-      buyPrice: new FormControl(productRawValue.buyPrice, {
-        validators: [Validators.required],
-      }),
-      sellPrice: new FormControl(productRawValue.sellPrice, {
-        validators: [Validators.required],
-      }),
-      stockQuantity: new FormControl(productRawValue.stockQuantity, {
-        validators: [Validators.required],
-      }),
+      stockQuantity: new FormControl(productRawValue.stockQuantity),
       lowStockAlert: new FormControl(productRawValue.lowStockAlert),
-      barcode: new FormControl(productRawValue.barcode),
-      active: new FormControl(productRawValue.active, {
-        validators: [Validators.required],
-      }),
+      remarks: new FormControl(productRawValue.remarks),
+      location: new FormControl(productRawValue.location),
+      message: new FormControl(productRawValue.message),
+      value: new FormControl(productRawValue.value),
     });
   }
 
@@ -85,7 +91,6 @@ export class ProductFormService {
   private getFormDefaults(): ProductFormDefaults {
     return {
       id: null,
-      active: false,
     };
   }
 }

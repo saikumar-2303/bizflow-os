@@ -18,15 +18,20 @@
         "title": "Product"
       },
       "id": "ID",
+      "sku": "Sku",
+      "barcode": "Barcode",
       "name": "Name",
       "category": "Category",
+      "shape": "Shape",
+      "retailPack": "Retail Pack",
+      "wholesalePack": "Wholesale Pack",
       "description": "Description",
-      "buyPrice": "Buy Price",
-      "sellPrice": "Sell Price",
       "stockQuantity": "Stock Quantity",
       "lowStockAlert": "Low Stock Alert",
-      "barcode": "Barcode",
-      "active": "Active"
+      "remarks": "Remarks",
+      "location": "Location",
+      "message": "Message",
+      "value": "Value"
     }
   }
 }

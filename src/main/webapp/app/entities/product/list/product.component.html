@@ -42,6 +42,20 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="sku">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.product.sku">Sku</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="barcode">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.product.barcode">Barcode</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="name">
               <div class="d-flex">
                 <span jhiTranslate="bizFlowApp.product.name">Name</span>
@@ -56,23 +70,30 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
+            <th scope="col" jhiSortBy="shape">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.product.shape">Shape</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="retailPack">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.product.retailPack">Retail Pack</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="wholesalePack">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.product.wholesalePack">Wholesale Pack</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
             <th scope="col" jhiSortBy="description">
               <div class="d-flex">
                 <span jhiTranslate="bizFlowApp.product.description">Description</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="buyPrice">
-              <div class="d-flex">
-                <span jhiTranslate="bizFlowApp.product.buyPrice">Buy Price</span>
-
-                <fa-icon class="p-1" icon="sort"></fa-icon>
-              </div>
-            </th>
-            <th scope="col" jhiSortBy="sellPrice">
-              <div class="d-flex">
-                <span jhiTranslate="bizFlowApp.product.sellPrice">Sell Price</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -91,16 +112,30 @@
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="barcode">
+            <th scope="col" jhiSortBy="remarks">
               <div class="d-flex">
-                <span jhiTranslate="bizFlowApp.product.barcode">Barcode</span>
+                <span jhiTranslate="bizFlowApp.product.remarks">Remarks</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
             </th>
-            <th scope="col" jhiSortBy="active">
+            <th scope="col" jhiSortBy="location">
               <div class="d-flex">
-                <span jhiTranslate="bizFlowApp.product.active">Active</span>
+                <span jhiTranslate="bizFlowApp.product.location">Location</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="message">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.product.message">Message</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="value">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.product.value">Value</span>
 
                 <fa-icon class="p-1" icon="sort"></fa-icon>
               </div>
@@ -114,15 +149,20 @@
               <td>
                 <a [routerLink]="['/product', product.id, 'view']">{{ product.id }}</a>
               </td>
+              <td>{{ product.sku }}</td>
+              <td>{{ product.barcode }}</td>
               <td>{{ product.name }}</td>
               <td>{{ product.category }}</td>
+              <td>{{ product.shape }}</td>
+              <td>{{ product.retailPack }}</td>
+              <td>{{ product.wholesalePack }}</td>
               <td>{{ product.description }}</td>
-              <td>{{ product.buyPrice }}</td>
-              <td>{{ product.sellPrice }}</td>
               <td>{{ product.stockQuantity }}</td>
               <td>{{ product.lowStockAlert }}</td>
-              <td>{{ product.barcode }}</td>
-              <td>{{ product.active }}</td>
+              <td>{{ product.remarks }}</td>
+              <td>{{ product.location }}</td>
+              <td>{{ product.message }}</td>
+              <td>{{ product.value }}</td>
               <td class="text-end">
                 <div class="btn-group">
                   <a [routerLink]="['/product', product.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">

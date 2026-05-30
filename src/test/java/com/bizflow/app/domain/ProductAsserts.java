@@ -1,6 +1,5 @@
 package com.bizflow.app.domain;
 
-import static com.bizflow.app.domain.AssertUtils.bigDecimalCompareTo;
 import static org.assertj.core.api.Assertions.assertThat;
 
 public class ProductAsserts {
@@ -48,19 +47,20 @@ public class ProductAsserts {
     public static void assertProductUpdatableFieldsEquals(Product expected, Product actual) {
         assertThat(actual)
             .as("Verify Product relevant properties")
+            .satisfies(a -> assertThat(a.getSku()).as("check sku").isEqualTo(expected.getSku()))
+            .satisfies(a -> assertThat(a.getBarcode()).as("check barcode").isEqualTo(expected.getBarcode()))
             .satisfies(a -> assertThat(a.getName()).as("check name").isEqualTo(expected.getName()))
             .satisfies(a -> assertThat(a.getCategory()).as("check category").isEqualTo(expected.getCategory()))
+            .satisfies(a -> assertThat(a.getShape()).as("check shape").isEqualTo(expected.getShape()))
+            .satisfies(a -> assertThat(a.getRetailPack()).as("check retailPack").isEqualTo(expected.getRetailPack()))
+            .satisfies(a -> assertThat(a.getWholesalePack()).as("check wholesalePack").isEqualTo(expected.getWholesalePack()))
             .satisfies(a -> assertThat(a.getDescription()).as("check description").isEqualTo(expected.getDescription()))
-            .satisfies(a ->
-                assertThat(a.getBuyPrice()).as("check buyPrice").usingComparator(bigDecimalCompareTo).isEqualTo(expected.getBuyPrice())
-            )
-            .satisfies(a ->
-                assertThat(a.getSellPrice()).as("check sellPrice").usingComparator(bigDecimalCompareTo).isEqualTo(expected.getSellPrice())
-            )
             .satisfies(a -> assertThat(a.getStockQuantity()).as("check stockQuantity").isEqualTo(expected.getStockQuantity()))
             .satisfies(a -> assertThat(a.getLowStockAlert()).as("check lowStockAlert").isEqualTo(expected.getLowStockAlert()))
-            .satisfies(a -> assertThat(a.getBarcode()).as("check barcode").isEqualTo(expected.getBarcode()))
-            .satisfies(a -> assertThat(a.getActive()).as("check active").isEqualTo(expected.getActive()));
+            .satisfies(a -> assertThat(a.getRemarks()).as("check remarks").isEqualTo(expected.getRemarks()))
+            .satisfies(a -> assertThat(a.getLocation()).as("check location").isEqualTo(expected.getLocation()))
+            .satisfies(a -> assertThat(a.getMessage()).as("check message").isEqualTo(expected.getMessage()))
+            .satisfies(a -> assertThat(a.getValue()).as("check value").isEqualTo(expected.getValue()));
     }
 
     /**

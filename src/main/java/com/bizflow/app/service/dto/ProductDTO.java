@@ -2,7 +2,6 @@ package com.bizflow.app.service.dto;
 
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
-import java.math.BigDecimal;
 import java.util.Objects;
 
 /**
@@ -14,27 +13,35 @@ public class ProductDTO implements Serializable {
     private Long id;
 
     @NotNull
+    private String sku;
+
+    @NotNull
+    private String barcode;
+
+    @NotNull
     private String name;
 
     private String category;
 
+    private String shape;
+
+    private Integer retailPack;
+
+    private Integer wholesalePack;
+
     private String description;
 
-    @NotNull
-    private BigDecimal buyPrice;
-
-    @NotNull
-    private BigDecimal sellPrice;
-
-    @NotNull
     private Integer stockQuantity;
 
     private Integer lowStockAlert;
 
-    private String barcode;
+    private String remarks;
 
-    @NotNull
-    private Boolean active;
+    private String location;
+
+    private String message;
+
+    private String value;
 
     public Long getId() {
         return id;
@@ -42,6 +49,22 @@ public class ProductDTO implements Serializable {
 
     public void setId(Long id) {
         this.id = id;
+    }
+
+    public String getSku() {
+        return sku;
+    }
+
+    public void setSku(String sku) {
+        this.sku = sku;
+    }
+
+    public String getBarcode() {
+        return barcode;
+    }
+
+    public void setBarcode(String barcode) {
+        this.barcode = barcode;
     }
 
     public String getName() {
@@ -60,28 +83,36 @@ public class ProductDTO implements Serializable {
         this.category = category;
     }
 
+    public String getShape() {
+        return shape;
+    }
+
+    public void setShape(String shape) {
+        this.shape = shape;
+    }
+
+    public Integer getRetailPack() {
+        return retailPack;
+    }
+
+    public void setRetailPack(Integer retailPack) {
+        this.retailPack = retailPack;
+    }
+
+    public Integer getWholesalePack() {
+        return wholesalePack;
+    }
+
+    public void setWholesalePack(Integer wholesalePack) {
+        this.wholesalePack = wholesalePack;
+    }
+
     public String getDescription() {
         return description;
     }
 
     public void setDescription(String description) {
         this.description = description;
-    }
-
-    public BigDecimal getBuyPrice() {
-        return buyPrice;
-    }
-
-    public void setBuyPrice(BigDecimal buyPrice) {
-        this.buyPrice = buyPrice;
-    }
-
-    public BigDecimal getSellPrice() {
-        return sellPrice;
-    }
-
-    public void setSellPrice(BigDecimal sellPrice) {
-        this.sellPrice = sellPrice;
     }
 
     public Integer getStockQuantity() {
@@ -100,20 +131,36 @@ public class ProductDTO implements Serializable {
         this.lowStockAlert = lowStockAlert;
     }
 
-    public String getBarcode() {
-        return barcode;
+    public String getRemarks() {
+        return remarks;
     }
 
-    public void setBarcode(String barcode) {
-        this.barcode = barcode;
+    public void setRemarks(String remarks) {
+        this.remarks = remarks;
     }
 
-    public Boolean getActive() {
-        return active;
+    public String getLocation() {
+        return location;
     }
 
-    public void setActive(Boolean active) {
-        this.active = active;
+    public void setLocation(String location) {
+        this.location = location;
+    }
+
+    public String getMessage() {
+        return message;
+    }
+
+    public void setMessage(String message) {
+        this.message = message;
+    }
+
+    public String getValue() {
+        return value;
+    }
+
+    public void setValue(String value) {
+        this.value = value;
     }
 
     @Override
@@ -142,15 +189,20 @@ public class ProductDTO implements Serializable {
     public String toString() {
         return "ProductDTO{" +
             "id=" + getId() +
+            ", sku='" + getSku() + "'" +
+            ", barcode='" + getBarcode() + "'" +
             ", name='" + getName() + "'" +
             ", category='" + getCategory() + "'" +
+            ", shape='" + getShape() + "'" +
+            ", retailPack=" + getRetailPack() +
+            ", wholesalePack=" + getWholesalePack() +
             ", description='" + getDescription() + "'" +
-            ", buyPrice=" + getBuyPrice() +
-            ", sellPrice=" + getSellPrice() +
             ", stockQuantity=" + getStockQuantity() +
             ", lowStockAlert=" + getLowStockAlert() +
-            ", barcode='" + getBarcode() + "'" +
-            ", active='" + getActive() + "'" +
+            ", remarks='" + getRemarks() + "'" +
+            ", location='" + getLocation() + "'" +
+            ", message='" + getMessage() + "'" +
+            ", value='" + getValue() + "'" +
             "}";
     }
 }

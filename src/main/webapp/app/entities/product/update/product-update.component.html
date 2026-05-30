@@ -15,6 +15,32 @@
           </div>
         }
 
+        @let skuRef = editForm.get('sku')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_sku" jhiTranslate="bizFlowApp.product.sku">Sku</label>
+          <input type="text" class="form-control" name="sku" id="field_sku" data-cy="sku" formControlName="sku" />
+          @if (skuRef.invalid && (skuRef.dirty || skuRef.touched)) {
+            <div>
+              @if (editForm.get('sku')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
+        @let barcodeRef = editForm.get('barcode')!;
+        <div class="mb-3">
+          <label class="form-label" for="field_barcode" jhiTranslate="bizFlowApp.product.barcode">Barcode</label>
+          <input type="text" class="form-control" name="barcode" id="field_barcode" data-cy="barcode" formControlName="barcode" />
+          @if (barcodeRef.invalid && (barcodeRef.dirty || barcodeRef.touched)) {
+            <div>
+              @if (editForm.get('barcode')?.errors?.required) {
+                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
+              }
+            </div>
+          }
+        </div>
+
         @let nameRef = editForm.get('name')!;
         <div class="mb-3">
           <label class="form-label" for="field_name" jhiTranslate="bizFlowApp.product.name">Name</label>
@@ -34,6 +60,35 @@
         </div>
 
         <div class="mb-3">
+          <label class="form-label" for="field_shape" jhiTranslate="bizFlowApp.product.shape">Shape</label>
+          <input type="text" class="form-control" name="shape" id="field_shape" data-cy="shape" formControlName="shape" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_retailPack" jhiTranslate="bizFlowApp.product.retailPack">Retail Pack</label>
+          <input
+            type="number"
+            class="form-control"
+            name="retailPack"
+            id="field_retailPack"
+            data-cy="retailPack"
+            formControlName="retailPack"
+          />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_wholesalePack" jhiTranslate="bizFlowApp.product.wholesalePack">Wholesale Pack</label>
+          <input
+            type="number"
+            class="form-control"
+            name="wholesalePack"
+            id="field_wholesalePack"
+            data-cy="wholesalePack"
+            formControlName="wholesalePack"
+          />
+        </div>
+
+        <div class="mb-3">
           <label class="form-label" for="field_description" jhiTranslate="bizFlowApp.product.description">Description</label>
           <input
             type="text"
@@ -45,45 +100,6 @@
           />
         </div>
 
-        @let buyPriceRef = editForm.get('buyPrice')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_buyPrice" jhiTranslate="bizFlowApp.product.buyPrice">Buy Price</label>
-          <input type="number" class="form-control" name="buyPrice" id="field_buyPrice" data-cy="buyPrice" formControlName="buyPrice" />
-          @if (buyPriceRef.invalid && (buyPriceRef.dirty || buyPriceRef.touched)) {
-            <div>
-              @if (editForm.get('buyPrice')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('buyPrice')?.errors?.number"
-                jhiTranslate="entity.validation.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
-        </div>
-
-        @let sellPriceRef = editForm.get('sellPrice')!;
-        <div class="mb-3">
-          <label class="form-label" for="field_sellPrice" jhiTranslate="bizFlowApp.product.sellPrice">Sell Price</label>
-          <input type="number" class="form-control" name="sellPrice" id="field_sellPrice" data-cy="sellPrice" formControlName="sellPrice" />
-          @if (sellPriceRef.invalid && (sellPriceRef.dirty || sellPriceRef.touched)) {
-            <div>
-              @if (editForm.get('sellPrice')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('sellPrice')?.errors?.number"
-                jhiTranslate="entity.validation.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
-        </div>
-
-        @let stockQuantityRef = editForm.get('stockQuantity')!;
         <div class="mb-3">
           <label class="form-label" for="field_stockQuantity" jhiTranslate="bizFlowApp.product.stockQuantity">Stock Quantity</label>
           <input
@@ -94,19 +110,6 @@
             data-cy="stockQuantity"
             formControlName="stockQuantity"
           />
-          @if (stockQuantityRef.invalid && (stockQuantityRef.dirty || stockQuantityRef.touched)) {
-            <div>
-              @if (editForm.get('stockQuantity')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-              }
-              <small
-                class="form-text text-danger"
-                [hidden]="!editForm.get('stockQuantity')?.errors?.number"
-                jhiTranslate="entity.validation.number"
-                >This field should be a number.</small
-              >
-            </div>
-          }
         </div>
 
         <div class="mb-3">
@@ -122,21 +125,23 @@
         </div>
 
         <div class="mb-3">
-          <label class="form-label" for="field_barcode" jhiTranslate="bizFlowApp.product.barcode">Barcode</label>
-          <input type="text" class="form-control" name="barcode" id="field_barcode" data-cy="barcode" formControlName="barcode" />
+          <label class="form-label" for="field_remarks" jhiTranslate="bizFlowApp.product.remarks">Remarks</label>
+          <input type="text" class="form-control" name="remarks" id="field_remarks" data-cy="remarks" formControlName="remarks" />
         </div>
 
-        @let activeRef = editForm.get('active')!;
         <div class="mb-3">
-          <label class="form-label" for="field_active" jhiTranslate="bizFlowApp.product.active">Active</label>
-          <input type="checkbox" class="form-check" name="active" id="field_active" data-cy="active" formControlName="active" />
-          @if (activeRef.invalid && (activeRef.dirty || activeRef.touched)) {
-            <div>
-              @if (editForm.get('active')?.errors?.required) {
-                <small class="form-text text-danger" jhiTranslate="entity.validation.required">This field is required.</small>
-              }
-            </div>
-          }
+          <label class="form-label" for="field_location" jhiTranslate="bizFlowApp.product.location">Location</label>
+          <input type="text" class="form-control" name="location" id="field_location" data-cy="location" formControlName="location" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_message" jhiTranslate="bizFlowApp.product.message">Message</label>
+          <input type="text" class="form-control" name="message" id="field_message" data-cy="message" formControlName="message" />
+        </div>
+
+        <div class="mb-3">
+          <label class="form-label" for="field_value" jhiTranslate="bizFlowApp.product.value">Value</label>
+          <input type="text" class="form-control" name="value" id="field_value" data-cy="value" formControlName="value" />
         </div>
       </div>
 
