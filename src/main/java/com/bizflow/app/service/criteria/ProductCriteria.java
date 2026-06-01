@@ -52,6 +52,8 @@ public class ProductCriteria implements Serializable, Criteria {
 
     private StringFilter value;
 
+    private LongFilter inventory_idId;
+
     private Boolean distinct;
 
     public ProductCriteria() {}
@@ -72,6 +74,7 @@ public class ProductCriteria implements Serializable, Criteria {
         this.location = other.optionalLocation().map(StringFilter::copy).orElse(null);
         this.message = other.optionalMessage().map(StringFilter::copy).orElse(null);
         this.value = other.optionalValue().map(StringFilter::copy).orElse(null);
+        this.inventory_idId = other.optionalInventory_idId().map(LongFilter::copy).orElse(null);
         this.distinct = other.distinct;
     }
 
@@ -365,6 +368,25 @@ public class ProductCriteria implements Serializable, Criteria {
         this.value = value;
     }
 
+    public LongFilter getInventory_idId() {
+        return inventory_idId;
+    }
+
+    public Optional<LongFilter> optionalInventory_idId() {
+        return Optional.ofNullable(inventory_idId);
+    }
+
+    public LongFilter inventory_idId() {
+        if (inventory_idId == null) {
+            setInventory_idId(new LongFilter());
+        }
+        return inventory_idId;
+    }
+
+    public void setInventory_idId(LongFilter inventory_idId) {
+        this.inventory_idId = inventory_idId;
+    }
+
     public Boolean getDistinct() {
         return distinct;
     }
@@ -409,6 +431,7 @@ public class ProductCriteria implements Serializable, Criteria {
             Objects.equals(location, that.location) &&
             Objects.equals(message, that.message) &&
             Objects.equals(value, that.value) &&
+            Objects.equals(inventory_idId, that.inventory_idId) &&
             Objects.equals(distinct, that.distinct)
         );
     }
@@ -431,6 +454,7 @@ public class ProductCriteria implements Serializable, Criteria {
             location,
             message,
             value,
+            inventory_idId,
             distinct
         );
     }
@@ -454,6 +478,7 @@ public class ProductCriteria implements Serializable, Criteria {
             optionalLocation().map(f -> "location=" + f + ", ").orElse("") +
             optionalMessage().map(f -> "message=" + f + ", ").orElse("") +
             optionalValue().map(f -> "value=" + f + ", ").orElse("") +
+            optionalInventory_idId().map(f -> "inventory_idId=" + f + ", ").orElse("") +
             optionalDistinct().map(f -> "distinct=" + f + ", ").orElse("") +
         "}";
     }

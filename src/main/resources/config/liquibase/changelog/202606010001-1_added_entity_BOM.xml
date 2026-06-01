@@ -1,0 +1,50 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity BOM.
+    -->
+
+    <changeSet id="202606010001-1" author="saikumar">
+        <createTable tableName="product_bom">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="finished_product_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="raw_material_id" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="quantity_required" type="bigint">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="remarks" type="varchar(500)" />
+
+            <!-- Future use -->
+            <column name="is_active" type="boolean" defaultValueBoolean="true" />
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="product_bom"
+            baseColumnNames="finished_product_id"
+            referencedTableName="product"
+            referencedColumnNames="id"
+            constraintName="fk_product_bom_finished_product" />
+
+        <addForeignKeyConstraint
+            baseTableName="product_bom"
+            baseColumnNames="raw_material_id"
+            referencedTableName="product"
+            referencedColumnNames="id"
+            constraintName="fk_product_bom_raw_material" />
+    </changeSet>
+</databaseChangeLog>

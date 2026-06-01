@@ -1,5 +1,6 @@
 package com.bizflow.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
@@ -48,6 +49,7 @@ public class StockTransaction implements Serializable {
     private Instant createdDate;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "inventory_ids" }, allowSetters = true)
     private Product product;
 
     // jhipster-needle-entity-add-field - JHipster will add fields here

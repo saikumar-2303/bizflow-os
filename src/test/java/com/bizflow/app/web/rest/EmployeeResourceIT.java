@@ -707,7 +707,7 @@ class EmployeeResourceIT {
         Employee partialUpdatedEmployee = new Employee();
         partialUpdatedEmployee.setId(employee.getId());
 
-        partialUpdatedEmployee.designation(UPDATED_DESIGNATION);
+        partialUpdatedEmployee.name(UPDATED_NAME).phone(UPDATED_PHONE).salary(UPDATED_SALARY).joiningDate(UPDATED_JOINING_DATE);
 
         restEmployeeMockMvc
             .perform(

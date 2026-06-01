@@ -1,0 +1,142 @@
+<div>
+  <h2 id="page-heading" data-cy="InventoryHeading">
+    <span jhiTranslate="bizFlowApp.inventory.home.title">Inventories</span>
+
+    <div class="d-flex justify-content-end">
+      <button class="btn btn-info me-2" (click)="load()" [disabled]="isLoading">
+        <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
+        <span jhiTranslate="bizFlowApp.inventory.home.refreshListLabel">Refresh list</span>
+      </button>
+
+      <button
+        id="jh-create-entity"
+        data-cy="entityCreateButton"
+        class="btn btn-primary jh-create-entity create-inventory"
+        [routerLink]="['/inventory/new']"
+      >
+        <fa-icon icon="plus"></fa-icon>
+        <span jhiTranslate="bizFlowApp.inventory.home.createLabel">Create a new Inventory</span>
+      </button>
+    </div>
+  </h2>
+
+  <jhi-alert-error />
+
+  <jhi-alert />
+
+  <jhi-filter [filters]="filters" />
+
+  @if (inventories().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="bizFlowApp.inventory.home.notFound">No Inventories found</span>
+    </div>
+  } @else {
+    <div class="table-responsive table-entities" id="entities">
+      <table class="table table-striped" aria-describedby="page-heading">
+        <thead>
+          <tr jhiSort [(sortState)]="sortState" (sortChange)="navigateToWithComponentValues($event)">
+            <th scope="col" jhiSortBy="id">
+              <div class="d-flex">
+                <span jhiTranslate="global.field.id">ID</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="inventory_id">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.inventory.inventory_id">Inventory Id</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="remarks">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.inventory.remarks">Remarks</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="location">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.inventory.location">Location</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="description">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.inventory.description">Description</span>
+
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col" jhiSortBy="product_id.sku">
+              <div class="d-flex">
+                <span jhiTranslate="bizFlowApp.inventory.product_id">Product Id</span>
+                <fa-icon class="p-1" icon="sort"></fa-icon>
+              </div>
+            </th>
+            <th scope="col"></th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (inventory of inventories(); track trackId(inventory)) {
+            <tr data-cy="entityTable">
+              <td>
+                <a [routerLink]="['/inventory', inventory.id, 'view']">{{ inventory.id }}</a>
+              </td>
+              <td>{{ inventory.inventory_id }}</td>
+              <td>{{ inventory.remarks }}</td>
+              <td>{{ inventory.location }}</td>
+              <td>{{ inventory.description }}</td>
+              <td>
+                @if (inventory.product_id) {
+                  <div>
+                    <a [routerLink]="['/product', inventory.product_id.id, 'view']">{{ inventory.product_id.sku }}</a>
+                  </div>
+                }
+              </td>
+              <td class="text-end">
+                <div class="btn-group">
+                  <a [routerLink]="['/inventory', inventory.id, 'view']" class="btn btn-info btn-sm" data-cy="entityDetailsButton">
+                    <fa-icon icon="eye"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.view">View</span>
+                  </a>
+
+                  <a [routerLink]="['/inventory', inventory.id, 'edit']" class="btn btn-primary btn-sm" data-cy="entityEditButton">
+                    <fa-icon icon="pencil-alt"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.edit">Edit</span>
+                  </a>
+
+                  <button type="submit" (click)="delete(inventory)" class="btn btn-danger btn-sm" data-cy="entityDeleteButton">
+                    <fa-icon icon="times"></fa-icon>
+                    <span class="d-none d-md-inline" jhiTranslate="entity.action.delete">Delete</span>
+                  </button>
+                </div>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+  @if (inventories().length > 0) {
+    <div>
+      <div class="d-flex justify-content-center">
+        <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
+      </div>
+
+      <div class="d-flex justify-content-center">
+        <ngb-pagination
+          [collectionSize]="totalItems"
+          [page]="page"
+          [pageSize]="itemsPerPage"
+          [maxSize]="5"
+          [rotate]="true"
+          [boundaryLinks]="true"
+          (pageChange)="navigateToPage($event)"
+        ></ngb-pagination>
+      </div>
+    </div>
+  }
+</div>

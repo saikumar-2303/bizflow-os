@@ -31,7 +31,8 @@
       "remarks": "Remarks",
       "location": "Location",
       "message": "Message",
-      "value": "Value"
+      "value": "Value",
+      "inventory_id": "Inventory Id"
     }
   }
 }

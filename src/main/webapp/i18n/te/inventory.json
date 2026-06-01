@@ -1,0 +1,28 @@
+{
+  "bizFlowApp": {
+    "inventory": {
+      "home": {
+        "title": "Inventories",
+        "refreshListLabel": "Refresh list",
+        "createLabel": "కొత్త Inventory  సృష్టించండి",
+        "createOrEditLabel": "Inventory సృష్టించండి లేదా సవరించండి",
+        "notFound": "No Inventories found"
+      },
+      "created": "{{ param }} ఐడీ తో ఒక కొత్త Inventory సృష్టించబడినది",
+      "updated": "{{ param }} ఐడీ తో ఒక కొత్త Inventory సవరించబడినది",
+      "deleted": "{{ param }} ఐడీ తో ఒక కొత్త Inventory తొలగించబడినది",
+      "delete": {
+        "question": "మీరు Inventory {{ id }} ఖచ్చితంగా తొలగించాలనుకుంటున్నారా?"
+      },
+      "detail": {
+        "title": "Inventory"
+      },
+      "id": "ID",
+      "inventory_id": "Inventory Id",
+      "remarks": "Remarks",
+      "location": "Location",
+      "description": "Description",
+      "product_id": "Product Id"
+    }
+  }
+}

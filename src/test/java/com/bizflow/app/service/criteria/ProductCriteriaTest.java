@@ -90,6 +90,7 @@ class ProductCriteriaTest {
         productCriteria.location();
         productCriteria.message();
         productCriteria.value();
+        productCriteria.inventory_idId();
         productCriteria.distinct();
     }
 
@@ -111,6 +112,7 @@ class ProductCriteriaTest {
                 condition.apply(criteria.getLocation()) &&
                 condition.apply(criteria.getMessage()) &&
                 condition.apply(criteria.getValue()) &&
+                condition.apply(criteria.getInventory_idId()) &&
                 condition.apply(criteria.getDistinct()),
             "every filter matches"
         );
@@ -134,6 +136,7 @@ class ProductCriteriaTest {
                 condition.apply(criteria.getLocation(), copy.getLocation()) &&
                 condition.apply(criteria.getMessage(), copy.getMessage()) &&
                 condition.apply(criteria.getValue(), copy.getValue()) &&
+                condition.apply(criteria.getInventory_idId(), copy.getInventory_idId()) &&
                 condition.apply(criteria.getDistinct(), copy.getDistinct()),
             "every filter matches"
         );

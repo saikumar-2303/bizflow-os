@@ -1,0 +1,54 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    @if (inventory(); as inventoryRef) {
+      <div>
+        <h2 data-cy="inventoryDetailsHeading"><span jhiTranslate="bizFlowApp.inventory.detail.title">Inventory</span></h2>
+
+        <hr />
+
+        <jhi-alert-error />
+
+        <jhi-alert />
+
+        <dl class="row-md jh-entity-details">
+          <dt><span jhiTranslate="global.field.id">ID</span></dt>
+          <dd>
+            <span>{{ inventoryRef.id }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.inventory.inventory_id">Inventory Id</span></dt>
+          <dd>
+            <span>{{ inventoryRef.inventory_id }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.inventory.remarks">Remarks</span></dt>
+          <dd>
+            <span>{{ inventoryRef.remarks }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.inventory.location">Location</span></dt>
+          <dd>
+            <span>{{ inventoryRef.location }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.inventory.description">Description</span></dt>
+          <dd>
+            <span>{{ inventoryRef.description }}</span>
+          </dd>
+          <dt><span jhiTranslate="bizFlowApp.inventory.product_id">Product Id</span></dt>
+          <dd>
+            @if (inventory()!.product_id) {
+              <div>
+                <a [routerLink]="['/product', inventory()!.product_id?.id, 'view']">{{ inventoryRef.product_id?.sku }}</a>
+              </div>
+            }
+          </dd>
+        </dl>
+
+        <button type="submit" (click)="previousState()" class="btn btn-info" data-cy="entityDetailsBackButton">
+          <fa-icon icon="arrow-left"></fa-icon>&nbsp;<span jhiTranslate="entity.action.back">Back</span>
+        </button>
+
+        <button type="button" [routerLink]="['/inventory', inventoryRef.id, 'edit']" class="btn btn-primary">
+          <fa-icon icon="pencil-alt"></fa-icon>&nbsp;<span jhiTranslate="entity.action.edit">Edit</span>
+        </button>
+      </div>
+    }
+  </div>
+</div>

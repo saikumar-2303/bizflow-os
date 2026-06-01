@@ -8,7 +8,7 @@
         <span jhiTranslate="bizFlowApp.product.home.refreshListLabel">Refresh list</span>
       </button>
 
-      <button
+      <!-- <button
         id="jh-create-entity"
         data-cy="entityCreateButton"
         class="btn btn-primary jh-create-entity create-product"
@@ -16,7 +16,7 @@
       >
         <fa-icon icon="plus"></fa-icon>
         <span jhiTranslate="bizFlowApp.product.home.createLabel">Create a new Product</span>
-      </button>
+      </button> -->
     </div>
   </h2>
 
@@ -26,7 +26,7 @@
 
   <jhi-filter [filters]="filters" />
 
-  @if (products().length === 0) {
+  <!-- @if (products().length === 0) {
     <div class="alert alert-warning" id="no-result">
       <span jhiTranslate="bizFlowApp.product.home.notFound">No Products found</span>
     </div>
@@ -186,8 +186,8 @@
         </tbody>
       </table>
     </div>
-  }
-  @if (products().length > 0) {
+  } -->
+  <!-- @if (products().length > 0) {
     <div>
       <div class="d-flex justify-content-center">
         <jhi-item-count [params]="{ page, totalItems, itemsPerPage }" />
@@ -205,5 +205,14 @@
         ></ngb-pagination>
       </div>
     </div>
-  }
+  } -->
+  <div class="container">
+    <div class="row row-cols-2 row-cols-lg-5 g-2 g-lg-3">
+      @for (product of products(); track trackId(product)) {
+        <div class="col">
+          <div [routerLink]="['/product', product.id, 'view']" class="p-3 bg-warning rounded-3">{{ product.sku }}</div>
+        </div>
+      }
+    </div>
+  </div>
 </div>

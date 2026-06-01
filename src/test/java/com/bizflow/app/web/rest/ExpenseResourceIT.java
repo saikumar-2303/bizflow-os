@@ -733,7 +733,12 @@ class ExpenseResourceIT {
         Expense partialUpdatedExpense = new Expense();
         partialUpdatedExpense.setId(expense.getId());
 
-        partialUpdatedExpense.category(UPDATED_CATEGORY).amount(UPDATED_AMOUNT);
+        partialUpdatedExpense
+            .title(UPDATED_TITLE)
+            .category(UPDATED_CATEGORY)
+            .amount(UPDATED_AMOUNT)
+            .expenseDate(UPDATED_EXPENSE_DATE)
+            .remarks(UPDATED_REMARKS);
 
         restExpenseMockMvc
             .perform(

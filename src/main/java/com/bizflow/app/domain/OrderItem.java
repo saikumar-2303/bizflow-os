@@ -38,6 +38,7 @@ public class OrderItem implements Serializable {
     private BigDecimal totalAmount;
 
     @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "inventory_ids" }, allowSetters = true)
     private Product product;
 
     @ManyToOne(fetch = FetchType.LAZY)

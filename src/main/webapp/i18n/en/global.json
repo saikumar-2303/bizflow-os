@@ -16,7 +16,8 @@
         "invoiceItem": "Invoice Item",
         "stockTransaction": "Stock Transaction",
         "expense": "Expense",
-        "employee": "Employee"
+        "employee": "Employee",
+        "inventory": "Inventory"
       },
       "account": {
         "main": "Account",

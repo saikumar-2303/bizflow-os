@@ -1,0 +1,49 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added the entity Stock.
+    -->
+    <changeSet id="202606010001-2" author="saikumar">
+        <createTable tableName="stock">
+            <column name="id" type="bigint">
+                <constraints primaryKey="true" nullable="false" />
+            </column>
+
+            <column name="product_id" type="bigint">
+                <constraints nullable="false" unique="true" />
+            </column>
+
+            <column name="current_stock" type="integer">
+                <constraints nullable="false" />
+            </column>
+
+            <column name="reserved_stock" type="integer" defaultValueNumeric="0" />
+
+            <column name="available_stock" type="integer" defaultValueNumeric="0" />
+
+            <column name="minimum_stock" type="integer" />
+
+            <column name="reorder_level" type="integer" />
+
+            <column name="location" type="varchar(255)" />
+
+            <column name="remarks" type="varchar(500)" />
+
+            <column name="last_updated" type="timestamp" />
+        </createTable>
+
+        <addForeignKeyConstraint
+            baseTableName="stock"
+            baseColumnNames="product_id"
+            referencedTableName="product"
+            referencedColumnNames="id"
+            constraintName="fk_stock_product" />
+    </changeSet>
+
+
+</databaseChangeLog>

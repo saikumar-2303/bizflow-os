@@ -438,11 +438,7 @@ class StockTransactionResourceIT {
         StockTransaction partialUpdatedStockTransaction = new StockTransaction();
         partialUpdatedStockTransaction.setId(stockTransaction.getId());
 
-        partialUpdatedStockTransaction
-            .transactionType(UPDATED_TRANSACTION_TYPE)
-            .previousStock(UPDATED_PREVIOUS_STOCK)
-            .remarks(UPDATED_REMARKS)
-            .createdDate(UPDATED_CREATED_DATE);
+        partialUpdatedStockTransaction.newStock(UPDATED_NEW_STOCK);
 
         restStockTransactionMockMvc
             .perform(

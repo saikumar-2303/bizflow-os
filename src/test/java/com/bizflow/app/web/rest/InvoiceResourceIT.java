@@ -981,8 +981,9 @@ class InvoiceResourceIT {
         partialUpdatedInvoice.setId(invoice.getId());
 
         partialUpdatedInvoice
-            .paidAmount(UPDATED_PAID_AMOUNT)
+            .invoiceNumber(UPDATED_INVOICE_NUMBER)
             .pendingAmount(UPDATED_PENDING_AMOUNT)
+            .paymentStatus(UPDATED_PAYMENT_STATUS)
             .createdDate(UPDATED_CREATED_DATE)
             .remarks(UPDATED_REMARKS);
 

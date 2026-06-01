@@ -6,6 +6,7 @@ import com.bizflow.app.repository.ProductRepository;
 import com.bizflow.app.service.criteria.ProductCriteria;
 import com.bizflow.app.service.dto.ProductDTO;
 import com.bizflow.app.service.mapper.ProductMapper;
+import jakarta.persistence.criteria.JoinType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.data.domain.Page;
@@ -86,7 +87,9 @@ public class ProductQueryService extends QueryService<Product> {
                 buildStringSpecification(criteria.getRemarks(), Product_.remarks),
                 buildStringSpecification(criteria.getLocation(), Product_.location),
                 buildStringSpecification(criteria.getMessage(), Product_.message),
-                buildStringSpecification(criteria.getValue(), Product_.value)
+                buildStringSpecification(criteria.getValue(), Product_.value),
+                buildSpecification(criteria.getInventory_idId(), root -> root.join(Product_.inventory_ids, JoinType.LEFT).get(Inventory_.id)
+                )
             );
         }
         return specification;

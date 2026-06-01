@@ -14,6 +14,12 @@ export const EntitySidebarItems: SidebarItem[] = [
     icon: 'bi bi-bag',
   },
   {
+    name: 'Inventory',
+    route: '/inventory',
+    translationKey: 'global.menu.entities.inventory',
+    icon: 'bi bi-boxes',
+  },
+  {
     name: 'Customer',
     route: '/customer',
     translationKey: 'global.menu.entities.customer',

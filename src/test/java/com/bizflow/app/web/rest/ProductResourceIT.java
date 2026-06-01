@@ -1328,11 +1328,13 @@ class ProductResourceIT {
         partialUpdatedProduct.setId(product.getId());
 
         partialUpdatedProduct
-            .sku(UPDATED_SKU)
+            .barcode(UPDATED_BARCODE)
             .name(UPDATED_NAME)
+            .category(UPDATED_CATEGORY)
+            .retailPack(UPDATED_RETAIL_PACK)
             .wholesalePack(UPDATED_WHOLESALE_PACK)
-            .description(UPDATED_DESCRIPTION)
-            .lowStockAlert(UPDATED_LOW_STOCK_ALERT)
+            .stockQuantity(UPDATED_STOCK_QUANTITY)
+            .location(UPDATED_LOCATION)
             .message(UPDATED_MESSAGE);
 
         restProductMockMvc

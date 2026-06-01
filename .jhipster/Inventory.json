@@ -1,0 +1,42 @@
+{
+  "annotations": {
+    "changelogDate": "20260531072719"
+  },
+  "dto": "mapstruct",
+  "fields": [
+    {
+      "fieldName": "inventory_id",
+      "fieldType": "String",
+      "fieldValidateRules": ["required", "unique"]
+    },
+    {
+      "fieldName": "remarks",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "location",
+      "fieldType": "String"
+    },
+    {
+      "fieldName": "description",
+      "fieldType": "String"
+    }
+  ],
+  "jpaMetamodelFiltering": true,
+  "name": "Inventory",
+  "pagination": "pagination",
+  "readOnly": false,
+  "relationships": [
+    {
+      "otherEntityField": "sku",
+      "otherEntityName": "product",
+      "otherEntityRelationshipName": "inventory_id",
+      "relationshipName": "product_id",
+      "relationshipSide": "left",
+      "relationshipType": "many-to-one",
+      "relationshipValidateRules": ["required"]
+    }
+  ],
+  "searchEngine": "no",
+  "service": "serviceClass"
+}

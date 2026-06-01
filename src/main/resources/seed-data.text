@@ -20,3 +20,13 @@ INSERT INTO product (
 (8,'PLT-GRN-RND-012-120','8215749364','Plate','GREEN','ROUND',12,120,'Green Round Plate 12x120'),
 (9,'PLT-GRN-RND-018-180','9436817258','Plate','GREEN','ROUND',18,180,'Green Round Plate 18x180'),
 (10,'PLT-GRN-RND-019-190','7568294137','Plate','GREEN','ROUND',19,190,'Green Round Plate 19x190');
+
+-- Raw material 31/05/2026
+
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (11, 'RAW-PLT-GRN-12IN-200', '7568594137', 'Sheet', 'GREEN', '12IN', 200, 'Raw materisl Green sheet');
+
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (12, 'RAW-PLT-MLT-12IN-200', '7568494137', 'Sheet', 'MLT', '12IN', 200, 'Raw materisl Multi-colour sheet');
+
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (13, 'RAW-PLT-MLT-14IN-200', '6568494137', 'Sheet', 'MLT', '14IN', 200, 'Raw materisl Multi-colour sheet 14 inch');
+
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (14, 'RAW-PLT-GRN-14IN-200', '6568494135', 'Sheet', 'GREEN', '14IN', 200, 'Raw materisl Green sheet 14 inch');

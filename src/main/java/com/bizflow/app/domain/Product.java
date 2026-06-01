@@ -1,8 +1,11 @@
 package com.bizflow.app.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
 import jakarta.persistence.*;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 
@@ -67,6 +70,11 @@ public class Product implements Serializable {
 
     @Column(name = "value")
     private String value;
+
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "product_id")
+    @Cache(usage = CacheConcurrencyStrategy.READ_WRITE)
+    @JsonIgnoreProperties(value = { "product_id" }, allowSetters = true)
+    private Set<Inventory> inventory_ids = new HashSet<>();
 
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
@@ -263,6 +271,37 @@ public class Product implements Serializable {
 
     public void setValue(String value) {
         this.value = value;
+    }
+
+    public Set<Inventory> getInventory_ids() {
+        return this.inventory_ids;
+    }
+
+    public void setInventory_ids(Set<Inventory> inventories) {
+        if (this.inventory_ids != null) {
+            this.inventory_ids.forEach(i -> i.setProduct_id(null));
+        }
+        if (inventories != null) {
+            inventories.forEach(i -> i.setProduct_id(this));
+        }
+        this.inventory_ids = inventories;
+    }
+
+    public Product inventory_ids(Set<Inventory> inventories) {
+        this.setInventory_ids(inventories);
+        return this;
+    }
+
+    public Product addInventory_id(Inventory inventory) {
+        this.inventory_ids.add(inventory);
+        inventory.setProduct_id(this);
+        return this;
+    }
+
+    public Product removeInventory_id(Inventory inventory) {
+        this.inventory_ids.remove(inventory);
+        inventory.setProduct_id(null);
+        return this;
     }
 
     // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here

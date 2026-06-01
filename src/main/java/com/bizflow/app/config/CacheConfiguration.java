@@ -59,6 +59,8 @@ public class CacheConfiguration {
             createCache(cm, com.bizflow.app.domain.StockTransaction.class.getName());
             createCache(cm, com.bizflow.app.domain.Expense.class.getName());
             createCache(cm, com.bizflow.app.domain.Employee.class.getName());
+            createCache(cm, com.bizflow.app.domain.Product.class.getName() + ".inventory_ids");
+            createCache(cm, com.bizflow.app.domain.Inventory.class.getName());
             // jhipster-needle-ehcache-add-entry
         };
     }
