@@ -8,7 +8,6 @@ import { createRequestOption } from 'app/core/request/request-util';
 import { IProduct, NewProduct } from '../product.model';
 
 export type PartialUpdateProduct = Partial<IProduct> & Pick<IProduct, 'id'>;
-
 export type EntityResponseType = HttpResponse<IProduct>;
 export type EntityArrayResponseType = HttpResponse<IProduct[]>;
 
@@ -17,6 +16,7 @@ export class ProductService {
   protected readonly http = inject(HttpClient);
   protected readonly applicationConfigService = inject(ApplicationConfigService);
 
+  // Base endpoints for standard CRUD actions
   protected resourceUrl = this.applicationConfigService.getEndpointFor('api/products');
 
   create(product: NewProduct): Observable<EntityResponseType> {
@@ -35,9 +35,25 @@ export class ProductService {
     return this.http.get<IProduct>(`${this.resourceUrl}/${id}`, { observe: 'response' });
   }
 
+  /**
+   * METHOD FOR DROPDOWN 1
+   * Fetches lightweight ID and Name profiles for primary selections
+   */
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
-    return this.http.get<IProduct[]>(this.resourceUrl, { params: options, observe: 'response' });
+    return this.http.get<IProduct[]>(`${this.resourceUrl}/dropdown/product-id-name`, { params: options, observe: 'response' });
+  }
+
+  /**
+   * METHOD FOR DROPDOWN 2 (DEPENDENT DROPDOWN)
+   * 🔥 FIXED: Routes directly to your specific custom Java endpoint path: /api/dropdown/items
+   */
+  queryDependentItems(productId: number): Observable<HttpResponse<any[]>> {
+    const customDropdownUrl = this.applicationConfigService.getEndpointFor('/dropdown/items');
+    return this.http.get<any[]>(`${this.resourceUrl}/dropdown/items`, {
+      params: { id: productId }, // Clean property shorthand execution
+      observe: 'response',
+    });
   }
 
   delete(id: number): Observable<HttpResponse<{}>> {

@@ -52,6 +52,14 @@ public class StockTransaction implements Serializable {
     @JsonIgnoreProperties(value = { "inventory_ids" }, allowSetters = true)
     private Product product;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "stockTransactions" }, allowSetters = true)
+    private Employee employee;
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JsonIgnoreProperties(value = { "stockTransactions" }, allowSetters = true)
+    private Stock stock;
+
     // jhipster-needle-entity-add-field - JHipster will add fields here
 
     public Long getId() {
@@ -158,7 +166,21 @@ public class StockTransaction implements Serializable {
         return this;
     }
 
-    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and setters here
+    public Employee getEmployee() {
+        return this.employee;
+    }
+
+    public StockTransaction employee(Employee employee) {
+        this.setEmployee(employee);
+        return this;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    // jhipster-needle-entity-add-getters-setters - JHipster will add getters and
+    // setters here
 
     @Override
     public boolean equals(Object o) {
@@ -173,7 +195,8 @@ public class StockTransaction implements Serializable {
 
     @Override
     public int hashCode() {
-        // see https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
+        // see
+        // https://vladmihalcea.com/how-to-implement-equals-and-hashcode-using-the-jpa-entity-identifier/
         return getClass().hashCode();
     }
 
@@ -181,13 +204,13 @@ public class StockTransaction implements Serializable {
     @Override
     public String toString() {
         return "StockTransaction{" +
-            "id=" + getId() +
-            ", transactionType='" + getTransactionType() + "'" +
-            ", quantity=" + getQuantity() +
-            ", previousStock=" + getPreviousStock() +
-            ", newStock=" + getNewStock() +
-            ", remarks='" + getRemarks() + "'" +
-            ", createdDate='" + getCreatedDate() + "'" +
-            "}";
+                "id=" + getId() +
+                ", transactionType='" + getTransactionType() + "'" +
+                ", quantity=" + getQuantity() +
+                ", previousStock=" + getPreviousStock() +
+                ", newStock=" + getNewStock() +
+                ", remarks='" + getRemarks() + "'" +
+                ", createdDate='" + getCreatedDate() + "'" +
+                "}";
     }
 }

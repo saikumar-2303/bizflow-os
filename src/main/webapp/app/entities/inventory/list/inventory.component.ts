@@ -14,12 +14,10 @@ import { FilterComponent, FilterOptions, IFilterOption, IFilterOptions } from 'a
 import { IInventory } from '../inventory.model';
 
 import { EntityArrayResponseType, InventoryService } from '../service/inventory.service';
-import { InventoryDeleteDialogComponent } from '../delete/inventory-delete-dialog.component';
-
 @Component({
   selector: 'jhi-inventory',
   templateUrl: './inventory.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FilterComponent, ItemCountComponent],
+  imports: [RouterModule, FormsModule, SharedModule, FilterComponent, ItemCountComponent],
 })
 export class InventoryComponent implements OnInit {
   subscription: Subscription | null = null;
@@ -40,7 +38,7 @@ export class InventoryComponent implements OnInit {
   protected modalService = inject(NgbModal);
   protected ngZone = inject(NgZone);
 
-  trackId = (item: IInventory): number => this.inventoryService.getInventoryIdentifier(item);
+  trackId = (item: IInventory): number => item.id;
 
   ngOnInit(): void {
     this.subscription = combineLatest([this.activatedRoute.queryParamMap, this.activatedRoute.data])
@@ -51,18 +49,6 @@ export class InventoryComponent implements OnInit {
       .subscribe();
 
     this.filters.filterChanges.subscribe(filterOptions => this.handleNavigation(1, this.sortState(), filterOptions));
-  }
-
-  delete(inventory: IInventory): void {
-    const modalRef = this.modalService.open(InventoryDeleteDialogComponent, { size: 'lg', backdrop: 'static' });
-    modalRef.componentInstance.inventory = inventory;
-    // unsubscribe not needed because closed completes on modal close
-    modalRef.closed
-      .pipe(
-        filter(reason => reason === ITEM_DELETED_EVENT),
-        tap(() => this.load()),
-      )
-      .subscribe();
   }
 
   load(): void {

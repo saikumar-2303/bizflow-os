@@ -19,7 +19,7 @@ import { ProductDeleteDialogComponent } from '../delete/product-delete-dialog.co
 @Component({
   selector: 'jhi-product',
   templateUrl: './product.component.html',
-  imports: [RouterModule, FormsModule, SharedModule, SortDirective, SortByDirective, FilterComponent, ItemCountComponent],
+  imports: [RouterModule, FormsModule, SharedModule, FilterComponent],
 })
 export class ProductComponent implements OnInit {
   subscription: Subscription | null = null;

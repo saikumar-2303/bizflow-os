@@ -32,6 +32,8 @@
     <include file="config/liquibase/changelog/20260531072719_added_entity_constraints_Inventory.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/202606010001-1_added_entity_BOM.xml" relativeToChangelogFile="false"/>
     <include file="config/liquibase/changelog/202606010001-2_added_entity_stock.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/202606020002-1_drop_not_null_constraint.xml" relativeToChangelogFile="false"/>
+    <include file="config/liquibase/changelog/20260605120000-1_add_columns_stockTransaction.xml" relativeToChangelogFile="false"/>
     <!-- jhipster-needle-liquibase-add-constraints-changelog - JHipster will add liquibase constraints changelogs here -->
     <!-- jhipster-needle-liquibase-add-incremental-changelog - JHipster will add incremental liquibase changelogs here -->
 </databaseChangeLog>

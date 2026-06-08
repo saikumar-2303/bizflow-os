@@ -8,25 +8,47 @@ INSERT INTO product (
     shape,
     retail_pack,
     wholesale_pack,
-    description
+    description,
+    value
 ) VALUES
-(1,'PLT-GRN-SQR-009-090','8749152361','Plate','GREEN','SQUARE',9,90,'Green Square Plate 9x90'),
-(2,'PLT-GRN-SQR-010-100','9614285734','Plate','GREEN','SQUARE',10,100,'Green Square Plate 10x100'),
-(3,'PLT-GRN-SQR-012-120','7186359428','Plate','GREEN','SQUARE',12,120,'Green Square Plate 12x120'),
-(4,'PLT-GRN-SQR-018-180','8527419637','Plate','GREEN','SQUARE',18,180,'Green Square Plate 18x180'),
-(5,'PLT-GRN-SQR-019-190','9362148751','Plate','GREEN','SQUARE',19,190,'Green Square Plate 19x190'),
-(6,'PLT-GRN-RND-009-090','6849273518','Plate','GREEN','ROUND',9,90,'Green Round Plate 9x90'),
-(7,'PLT-GRN-RND-010-100','7953186247','Plate','GREEN','ROUND',10,100,'Green Round Plate 10x100'),
-(8,'PLT-GRN-RND-012-120','8215749364','Plate','GREEN','ROUND',12,120,'Green Round Plate 12x120'),
-(9,'PLT-GRN-RND-018-180','9436817258','Plate','GREEN','ROUND',18,180,'Green Round Plate 18x180'),
-(10,'PLT-GRN-RND-019-190','7568294137','Plate','GREEN','ROUND',19,190,'Green Round Plate 19x190');
+(1,'PLT-GRN-SQR-009-090','8749152361','Plates','GREEN','SQUARE',9,90,'Green Square Plates 9x90','Final Product'),
+(2,'PLT-GRN-SQR-010-100','9614285734','Plates','GREEN','SQUARE',10,100,'Green Square Plates 10x100','Final Product'),
+(3,'PLT-GRN-SQR-012-120','7186359428','Plates','GREEN','SQUARE',12,120,'Green Square Plates 12x120','Final Product'),
+(4,'PLT-GRN-SQR-018-180','8527419637','Plates','GREEN','SQUARE',18,180,'Green Square Plates 18x180','Final Product'),
+(5,'PLT-GRN-SQR-019-190','9362148751','Plates','GREEN','SQUARE',19,190,'Green Square Plates 19x190','Final Product'),
+(6,'PLT-GRN-RND-009-090','6849273518','Plates','GREEN','ROUND',9,90,'Green Round Plates 9x90','Final Product'),
+(7,'PLT-GRN-RND-010-100','7953186247','Plates','GREEN','ROUND',10,100,'Green Round Plates 10x100','Final Product'),
+(8,'PLT-GRN-RND-012-120','8215749364','Plates','GREEN','ROUND',12,120,'Green Round Plates 12x120','Final Product'),
+(9,'PLT-GRN-RND-018-180','9436817258','Plates','GREEN','ROUND',18,180,'Green Round Plates 18x180','Final Product'),
+(10,'PLT-GRN-RND-019-190','7568294137','Plates','GREEN','ROUND',19,190,'Green Round Plates 19x190','Final Product');
 
 -- Raw material 31/05/2026
 
-INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (11, 'RAW-PLT-GRN-12IN-200', '7568594137', 'Sheet', 'GREEN', '12IN', 200, 'Raw materisl Green sheet');
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description,value) 
+VALUES (11, 'RAW-PLT-GRN-12IN-200', '7568594137', 'Sheet', 'GREEN', '12IN', 200, 'Raw materisl Green sheet',Raw Product);
 
-INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (12, 'RAW-PLT-MLT-12IN-200', '7568494137', 'Sheet', 'MLT', '12IN', 200, 'Raw materisl Multi-colour sheet');
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description,value) VALUES 
+(12, 'RAW-PLT-MLT-12IN-200', '7568494137', 'Sheet', 'MLT', '12IN', 200, 'Raw materisl Multi-colour sheet',Raw Product);
 
-INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (13, 'RAW-PLT-MLT-14IN-200', '6568494137', 'Sheet', 'MLT', '14IN', 200, 'Raw materisl Multi-colour sheet 14 inch');
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description,value) VALUES 
+(13, 'RAW-PLT-MLT-14IN-200', '6568494137', 'Sheet', 'MLT', '14IN', 200, 'Raw materisl Multi-colour sheet 14 inch',Raw Product);
 
-INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description) VALUES (14, 'RAW-PLT-GRN-14IN-200', '6568494135', 'Sheet', 'GREEN', '14IN', 200, 'Raw materisl Green sheet 14 inch');
+INSERT INTO product (id, sku, barcode, name, category, shape, wholesale_pack, description,value) VALUES 
+(14, 'RAW-PLT-GRN-14IN-200', '6568494135', 'Sheet', 'GREEN', '14IN', 200, 'Raw materisl Green sheet 14 inch',Raw Product);
+
+-- single Plate 04/06/2026
+
+INSERT INTO product (
+    id,
+    sku,
+    barcode,
+    name,
+    category,
+    shape,
+    description,
+    value
+) VALUES
+(15,'SEMI-PLT-GRN-SQR-001','7568664137','plate','GREEN','SQUARE','Green Square plate',Semi Product),
+(16,'SEMI-PLT-GRN-RND-002','7568774137','plate','GREEN','ROUND','Green Round plate',Semi Product),
+(17,'SEMI-PLT-MLT-SQR-001','7568884137','plate','GREEN','SQUARE','Multi Square plate',Semi Product),
+(18,'SEMI-PLT-MLT-RND-002','7568994137','plate','GREEN','ROUND','Multi Round plate',Semi Product);

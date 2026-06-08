@@ -2,6 +2,7 @@ package com.bizflow.app.web.rest;
 
 import com.bizflow.app.repository.StockTransactionRepository;
 import com.bizflow.app.service.StockTransactionService;
+import com.bizflow.app.service.dto.Response;
 import com.bizflow.app.service.dto.StockTransactionDTO;
 import com.bizflow.app.web.rest.errors.BadRequestAlertException;
 import jakarta.validation.Valid;
@@ -174,5 +175,11 @@ public class StockTransactionResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @PostMapping("/add-stock")
+    public ResponseEntity<Response> addStock(String sku, Integer quantity) {
+        Response response = stockTransactionService.addStock(sku, quantity);
+        return ResponseEntity.ok(response);
     }
 }

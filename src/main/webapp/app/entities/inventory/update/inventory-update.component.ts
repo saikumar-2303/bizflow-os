@@ -49,15 +49,15 @@ export class InventoryUpdateComponent implements OnInit {
     window.history.back();
   }
 
-  save(): void {
-    this.isSaving = true;
-    const inventory = this.inventoryFormService.getInventory(this.editForm);
-    if (inventory.id !== null) {
-      this.subscribeToSaveResponse(this.inventoryService.update(inventory));
-    } else {
-      this.subscribeToSaveResponse(this.inventoryService.create(inventory));
-    }
-  }
+  // save(): void {
+  //   this.isSaving = true;
+  //   const inventory = this.inventoryFormService.getInventory(this.editForm);
+  //   if (inventory.id !== null) {
+  //     this.subscribeToSaveResponse(this.inventoryService.update(inventory));
+  //   } else {
+  //     this.subscribeToSaveResponse(this.inventoryService.create(inventory));
+  //   }
+  // }
 
   protected subscribeToSaveResponse(result: Observable<HttpResponse<IInventory>>): void {
     result.pipe(finalize(() => this.onSaveFinalize())).subscribe({

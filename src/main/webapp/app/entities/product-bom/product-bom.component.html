@@ -1,0 +1,123 @@
+<div class="d-flex justify-content-center">
+  <div class="col-8">
+    <form name="editForm" role="form" novalidate (ngSubmit)="save()" #editForm="ngForm">
+      <h2 id="jhi-product-bom-heading" data-cy="ProductBomCreateUpdateHeading">Create a New Product BOM</h2>
+
+      <hr />
+
+      <div class="mb-3">
+        <label class="form-label" for="field_finishedProduct">1. Select Finished Product Parent:</label>
+        <select
+          class="form-control"
+          id="field_finishedProduct"
+          name="finishedProduct"
+          [(ngModel)]="productBom.finishedProduct"
+          (ngModelChange)="onProductChange($event)"
+          required
+        >
+          <option [ngValue]="null">-- Choose a Product --</option>
+          <option *ngFor="let prodOption of mainProducts" [ngValue]="prodOption">
+            {{ prodOption.name }}
+          </option>
+        </select>
+        <div *ngIf="editForm.submitted && !productBom.finishedProduct" class="text-danger small mt-1">
+          A parent product selection is required.
+        </div>
+      </div>
+
+      <div class="mb-4 p-3 border rounded bg-light">
+        <label class="form-label d-block fw-bold mb-2 text-secondary" for="field_rawMaterial_0">
+          2. Linked Material Component Items &amp; Quantities:
+        </label>
+
+        <div
+          *ngFor="let selectedMaterial of selectedMaterialsList; let i = index"
+          class="d-flex align-items-center gap-3 mb-3 pb-2 border-bottom border-white"
+        >
+          <div style="flex: 3">
+            <label class="small text-muted mb-1" [for]="'field_rawMaterial_' + i">Material Component:</label>
+            <select
+              class="form-control"
+              [id]="'field_rawMaterial_' + i"
+              [name]="'rawMaterial_' + i"
+              [(ngModel)]="selectedMaterial.product"
+              [disabled]="dependentItems.length === 0"
+              [compareWith]="compareProduct"
+              required
+            >
+              <option [ngValue]="null">-- Choose a Material --</option>
+              <option *ngFor="let item of dependentItems" [ngValue]="item">
+                {{ item.name }}
+              </option>
+            </select>
+          </div>
+
+          <div style="flex: 1">
+            <label class="small text-muted mb-1" [for]="'field_quantity_' + i">Quantity:</label>
+            <input
+              type="number"
+              class="form-control"
+              [id]="'field_quantity_' + i"
+              [name]="'quantity_' + i"
+              [(ngModel)]="selectedMaterial.quantity"
+              [disabled]="dependentItems.length === 0"
+              min="1"
+              required
+            />
+          </div>
+
+          <div class="align-self-end">
+            <button
+              type="button"
+              class="btn btn-outline-danger d-flex align-items-center justify-content-center"
+              (click)="removeMaterialRow(i)"
+              [disabled]="selectedMaterialsList.length === 1"
+              style="width: 38px; height: 38px"
+              title="Delete this component row"
+            >
+              <span>&times;</span>
+            </button>
+          </div>
+        </div>
+
+        <div class="mt-2">
+          <button type="button" class="btn btn-sm btn-success" (click)="addNewMaterialRow()" [disabled]="dependentItems.length === 0">
+            <span>+ Add Another Component Material</span>
+          </button>
+        </div>
+
+        <div *ngIf="editForm.submitted && selectedMaterialsList[0].product === null" class="text-danger small mt-1">
+          At least one dependent material component selection row is required.
+        </div>
+      </div>
+
+      <div class="mb-3">
+        <label class="form-label" for="field_remarks">Remarks / Notes:</label>
+        <textarea
+          class="form-control"
+          name="remarks"
+          id="field_remarks"
+          data-cy="remarks"
+          [(ngModel)]="productBom.remarks"
+          rows="3"
+        ></textarea>
+      </div>
+
+      <div class="mt-4">
+        <button type="button" id="cancel-save" data-cy="entityCreateCancelButton" class="btn btn-secondary me-2" (click)="previousState()">
+          <span class="fa aversion-ban"></span>&nbsp;<span>Cancel</span>
+        </button>
+
+        <button
+          type="submit"
+          id="save-entity"
+          data-cy="entityCreateSaveButton"
+          [disabled]="editForm.invalid || isSaving"
+          class="btn btn-primary"
+        >
+          <span class="fa save-floppy"></span>&nbsp;<span>Save BOM</span>
+        </button>
+      </div>
+    </form>
+  </div>
+</div>

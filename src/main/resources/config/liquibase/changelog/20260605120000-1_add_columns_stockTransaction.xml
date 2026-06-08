@@ -1,0 +1,41 @@
+<databaseChangeLog
+    xmlns="http://www.liquibase.org/xml/ns/dbchangelog"
+    xmlns:ext="http://www.liquibase.org/xml/ns/dbchangelog-ext"
+    xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xsi:schemaLocation="http://www.liquibase.org/xml/ns/dbchangelog http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-latest.xsd
+                        http://www.liquibase.org/xml/ns/dbchangelog-ext http://www.liquibase.org/xml/ns/dbchangelog/dbchangelog-ext.xsd">
+
+    <!--
+        Added columns to StockTransaction entity.
+    -->
+        <changeSet id="20260605120000-1" author="yourname">
+
+        <addColumn tableName="stock_transaction">
+
+            <column name="employee_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="stock_id" type="bigint">
+                <constraints nullable="true"/>
+            </column>
+
+        </addColumn>
+
+        <addForeignKeyConstraint
+            baseTableName="stock_transaction"
+            baseColumnNames="employee_id"
+            constraintName="fk_stock_transaction_employee"
+            referencedTableName="employee"
+            referencedColumnNames="id"/>
+
+        <addForeignKeyConstraint
+            baseTableName="stock_transaction"
+            baseColumnNames="stock_id"
+            constraintName="fk_stock_transaction_stock"
+            referencedTableName="stock"
+            referencedColumnNames="id"/>
+
+    </changeSet>
+
+</databaseChangeLog>

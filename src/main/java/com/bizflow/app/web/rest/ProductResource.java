@@ -11,6 +11,7 @@ import jakarta.validation.constraints.NotNull;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
+import java.util.Map;
 import java.util.Objects;
 import java.util.Optional;
 import org.slf4j.Logger;
@@ -197,5 +198,17 @@ public class ProductResource {
         return ResponseEntity.noContent()
             .headers(HeaderUtil.createEntityDeletionAlert(applicationName, true, ENTITY_NAME, id.toString()))
             .build();
+    }
+
+    @GetMapping("/dropdown/product-id-name")
+    public ResponseEntity<List<Map<String, Object>>> getProductIdAndName() {
+        List<Map<String, Object>> productIdAndName = productService.getProductIdAndName();
+        return ResponseEntity.ok(productIdAndName);
+    }
+
+    @GetMapping("/dropdown/items")
+    public ResponseEntity<List<Map<String, Object>>> getProductIdAndNameWithValueSemiProducts(@RequestParam Long id) {
+        List<Map<String, Object>> productIdAndNameWithValueSemiProducts = productService.getProductIdAndNameWithValueitem(id);
+        return ResponseEntity.ok(productIdAndNameWithValueSemiProducts);
     }
 }

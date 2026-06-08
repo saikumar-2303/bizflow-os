@@ -31,6 +31,7 @@ import { SidebarComponent } from 'app/sidebar/sidebar.component';
 })
 export default class MainComponent implements OnInit {
   isSidebarCollapsed = signal(false);
+  title = '';
   private readonly renderer: Renderer2;
 
   private readonly router = inject(Router);

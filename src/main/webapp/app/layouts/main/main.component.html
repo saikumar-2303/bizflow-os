@@ -33,11 +33,11 @@
         <!-- =========================================
              INNER PAGE NAVBAR
         ========================================= -->
-        <nav class="navbar navbar-light bg-warning rounded-4 shadow-sm border inner-navbar">
+        <nav *ngIf="!hideLayout" class="navbar navbar-light bg-warning rounded-4 shadow-sm border inner-navbar">
           <div class="container-fluid">
             <!-- LEFT SIDE -->
             <div class="d-flex align-items-center gap-2">
-              <span class="navbar-brand mb-0 h5 fw-bold"> Dashboard </span>
+              <span class="navbar-brand mb-0 h5 fw-bold"> {{ title }} </span>
             </div>
 
             <!-- RIGHT SIDE -->

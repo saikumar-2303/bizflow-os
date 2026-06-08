@@ -1,5 +1,7 @@
 package com.bizflow.app.service.dto;
 
+import com.bizflow.app.domain.Employee;
+import com.bizflow.app.domain.Stock;
 import jakarta.validation.constraints.*;
 import java.io.Serializable;
 import java.time.Instant;
@@ -13,24 +15,23 @@ public class StockTransactionDTO implements Serializable {
 
     private Long id;
 
-    @NotNull
     private String transactionType;
 
     @NotNull
     private Integer quantity;
 
-    @NotNull
     private Integer previousStock;
 
-    @NotNull
     private Integer newStock;
 
     private String remarks;
 
-    @NotNull
     private Instant createdDate;
 
     private ProductDTO product;
+    private Employee employee;
+
+    private Stock stock;
 
     public Long getId() {
         return id;
@@ -96,6 +97,22 @@ public class StockTransactionDTO implements Serializable {
         this.product = product;
     }
 
+    public Employee getEmployee() {
+        return employee;
+    }
+
+    public void setEmployee(Employee employee) {
+        this.employee = employee;
+    }
+
+    public Stock getStock() {
+        return stock;
+    }
+
+    public void setStock(Stock stock) {
+        this.stock = stock;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -129,6 +146,6 @@ public class StockTransactionDTO implements Serializable {
             ", remarks='" + getRemarks() + "'" +
             ", createdDate='" + getCreatedDate() + "'" +
             ", product=" + getProduct() +
-            "}";
+            ", Employee=" +getEmployee()+ "}";
     }
 }

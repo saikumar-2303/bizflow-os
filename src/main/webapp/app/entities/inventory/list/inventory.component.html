@@ -7,16 +7,6 @@
         <fa-icon icon="sync" [animation]="isLoading ? 'spin' : undefined"></fa-icon>
         <span jhiTranslate="bizFlowApp.inventory.home.refreshListLabel">Refresh list</span>
       </button>
-
-      <button
-        id="jh-create-entity"
-        data-cy="entityCreateButton"
-        class="btn btn-primary jh-create-entity create-inventory"
-        [routerLink]="['/inventory/new']"
-      >
-        <fa-icon icon="plus"></fa-icon>
-        <span jhiTranslate="bizFlowApp.inventory.home.createLabel">Create a new Inventory</span>
-      </button>
     </div>
   </h2>
 
@@ -26,7 +16,7 @@
 
   <jhi-filter [filters]="filters" />
 
-  @if (inventories().length === 0) {
+  <!-- @if (inventories().length === 0) {
     <div class="alert alert-warning" id="no-result">
       <span jhiTranslate="bizFlowApp.inventory.home.notFound">No Inventories found</span>
     </div>
@@ -119,7 +109,32 @@
         </tbody>
       </table>
     </div>
+  } -->
+
+  @if (inventories().length === 0) {
+    <div class="alert alert-warning" id="no-result">
+      <span jhiTranslate="bizFlowApp.inventory.home.notFound">No Inventories found</span>
+    </div>
   }
+
+  @for (stockDetails of inventories(); track trackId(stockDetails)) {
+    <div class="card mb-3" data-cy="entityTable">
+      <div class="card-body">
+        <h5 class="card-title">
+          <a [routerLink]="['/inventory', stockDetails.id, 'view']">{{ stockDetails.inventory_id }}</a>
+        </h5>
+        <p class="card-text">{{ stockDetails.remarks }}</p>
+        <p class="card-text">{{ stockDetails.location }}</p>
+        <p class="card-text">{{ stockDetails.description }}</p>
+        @if (stockDetails.product_id) {
+          <p class="card-text">
+            <a [routerLink]="['/product', stockDetails.product_id.id, 'view']">{{ stockDetails.product_id.sku }}</a>
+          </p>
+        }
+      </div>
+    </div>
+  }
+
   @if (inventories().length > 0) {
     <div>
       <div class="d-flex justify-content-center">
