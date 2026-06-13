@@ -46,7 +46,7 @@
               required
             >
               <option [ngValue]="null">-- Choose a Material --</option>
-              <option *ngFor="let item of dependentItems" [ngValue]="item">
+              <option *ngFor="let item of getAvailableRawMaterials(selectedMaterial)" [ngValue]="item">
                 {{ item.name }}
               </option>
             </select>

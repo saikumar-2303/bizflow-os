@@ -41,6 +41,11 @@ export class ProductService {
    */
   query(req?: any): Observable<EntityArrayResponseType> {
     const options = createRequestOption(req);
+    return this.http.get<IProduct[]>(this.resourceUrl, { params: options, observe: 'response' });
+  }
+
+  querySkuAndId(req?: any): Observable<EntityArrayResponseType> {
+    const options = createRequestOption(req);
     return this.http.get<IProduct[]>(`${this.resourceUrl}/dropdown/product-id-name`, { params: options, observe: 'response' });
   }
 

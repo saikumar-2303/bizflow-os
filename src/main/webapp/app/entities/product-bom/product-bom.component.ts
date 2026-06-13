@@ -28,6 +28,7 @@ export class ProductBomComponent implements OnInit {
 
   mainProducts: IProduct[] = [];
   dependentItems: any[] = [];
+  countAddButton = 1;
 
   // 🎯 FIXED: Initialized as an object containing both its dropdown selection and its custom row quantity
   selectedMaterialsList: any[] = [{ product: null, quantity: 1 }];
@@ -45,7 +46,7 @@ export class ProductBomComponent implements OnInit {
   }
 
   loadMainProducts(): void {
-    this.productService.query({ size: 1000 }).subscribe({
+    this.productService.querySkuAndId({ size: 1000 }).subscribe({
       next: (res: HttpResponse<IProduct[]>) => {
         this.mainProducts = res.body ?? [];
       },
@@ -78,7 +79,18 @@ export class ProductBomComponent implements OnInit {
    * ➕ BUTTON ACTION: Appends a blank structured row layout onto the view array list
    */
   addNewMaterialRow(): void {
-    this.selectedMaterialsList.push({ product: null, quantity: 1 });
+    if (this.dependentItems.length > this.countAddButton) {
+      this.countAddButton++;
+      this.selectedMaterialsList.push({ product: null, quantity: this.countAddButton });
+    } else {
+      alert('Max raw material reached for this product');
+    }
+  }
+
+  getAvailableRawMaterials(currentRow: any): any[] {
+    return this.dependentItems.filter(
+      product => !this.selectedMaterialsList.some(row => row !== currentRow && row.product?.id === product.id),
+    );
   }
 
   /**
@@ -86,6 +98,7 @@ export class ProductBomComponent implements OnInit {
    */
   removeMaterialRow(index: number): void {
     if (this.selectedMaterialsList.length > 1) {
+      this.countAddButton--;
       this.selectedMaterialsList.splice(index, 1);
     }
   }
